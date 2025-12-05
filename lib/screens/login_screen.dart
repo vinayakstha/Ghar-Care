@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ghar_care/common/my_snackbar.dart';
+import 'package:ghar_care/screens/dashboard_screen.dart';
 import 'package:ghar_care/screens/signup_screen.dart';
 import 'package:ghar_care/widgets/my_button.dart';
 import 'package:ghar_care/widgets/my_textformfield.dart';
@@ -28,6 +29,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DashboardScreen()),
+      );
       showSnackBar(context: context, message: "Login Successfull!");
     }
   }
@@ -35,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -48,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Title
                 const Text(
                   "Welcome back!",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(

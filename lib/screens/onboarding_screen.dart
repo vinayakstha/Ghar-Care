@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _finish() {
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SignupScreen()),
     );
@@ -87,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       "Skip",
                       style: TextStyle(
                         color: Colors.grey,
-                        fontSize: 18,
+                        fontSize: 21,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -99,10 +99,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: _next,
               child: Text(
-                _currentIndex == _pages.length - 1 ? "Finish" : "Next",
+                _currentIndex == _pages.length - 1 ? "Get Started" : "Next",
                 style: TextStyle(
                   color: Color(0xFF0066BAA),
-                  fontSize: 18,
+                  fontSize: 21,
                   fontWeight: FontWeight.w600,
                 ),
               ),
