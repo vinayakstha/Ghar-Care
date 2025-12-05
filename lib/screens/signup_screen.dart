@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghar_care/common/my_snackbar.dart';
 import 'package:ghar_care/screens/login_screen.dart';
 import 'package:ghar_care/widgets/my_button.dart';
 import 'package:ghar_care/widgets/my_textformfield.dart';
@@ -162,10 +163,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Account Created Successfully!"),
-                        ),
+                      showSnackBar(
+                        context: context,
+                        message: "Sign up successful!",
                       );
                     }
                   },

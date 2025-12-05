@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghar_care/common/my_snackbar.dart';
 import 'package:ghar_care/screens/signup_screen.dart';
 import 'package:ghar_care/widgets/my_button.dart';
 import 'package:ghar_care/widgets/my_textformfield.dart';
@@ -27,9 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Login successful!")));
+      showSnackBar(context: context, message: "Login Successfull!");
     }
   }
 
@@ -154,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Icons.g_mobiledata,
                               size: 28,
                               color: Colors.blue,
-                            ), // Fallback icon
+                            ),
                       ),
                     ),
                   ),

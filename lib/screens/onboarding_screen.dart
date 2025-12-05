@@ -86,7 +86,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Text(
                       "Skip",
                       style: TextStyle(
-                        color: Colors.red,
+                        color: Colors.grey,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -101,7 +101,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Text(
                 _currentIndex == _pages.length - 1 ? "Finish" : "Next",
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Color(0xFF0066BAA),
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -119,7 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 effect: WormEffect(
                   dotHeight: 12,
                   dotWidth: 12,
-                  activeDotColor: Colors.blue,
+                  activeDotColor: Color(0xFF0066BAA),
                 ),
               ),
             ),
