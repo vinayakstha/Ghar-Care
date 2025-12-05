@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghar_care/screens/signup_screen.dart';
 import 'package:ghar_care/widgets/my_onboarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -55,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _finish() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Scaffold()),
+      MaterialPageRoute(builder: (context) => SignupScreen()),
     );
   }
 
