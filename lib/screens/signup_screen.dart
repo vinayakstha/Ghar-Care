@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghar_care/screens/login_screen.dart';
 import 'package:ghar_care/widgets/my_button.dart';
 import 'package:ghar_care/widgets/my_textformfield.dart';
 
@@ -157,7 +158,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   text: "Create Account",
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // All fields valid
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Account Created Successfully!"),
@@ -175,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Expanded(child: Divider(color: Colors.grey.shade400)),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text("Or Sign Up With"),
+                      child: Text("Or Sign Up With Google"),
                     ),
                     Expanded(child: Divider(color: Colors.grey.shade400)),
                   ],
@@ -183,45 +187,20 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 const SizedBox(height: 20),
 
-                // // Google + Facebook buttons (Uncommented block for context)
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     // Google
-                //     InkWell(
-                //       onTap: () {},
-                //       child: Container(
-                //         padding: const EdgeInsets.all(12),
-                //         decoration: BoxDecoration(
-                //           shape: BoxShape.circle,
-                //           border: Border.all(color: Colors.grey.shade300),
-                //         ),
-                //         child: Image.asset(
-                //           "assets/images/google.png",
-                //           height: 28,
-                //         ),
-                //       ),
-                //     ),
-                //     const SizedBox(width: 25),
-
-                //     // Facebook
-                //     InkWell(
-                //       onTap: () {},
-                //       child: Container(
-                //         padding: const EdgeInsets.all(12),
-                //         decoration: BoxDecoration(
-                //           shape: BoxShape.circle,
-                //           border: Border.all(color: Colors.grey.shade300),
-                //         ),
-                //         child: Image.asset(
-                //           "assets/images/facebook.png",
-                //           height: 28,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                const SizedBox(height: 30),
+                Center(
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey.shade300),
+                      ),
+                      child: Image.asset("assets/icons/google.png", height: 28),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 25),
               ],
             ),
           ),
