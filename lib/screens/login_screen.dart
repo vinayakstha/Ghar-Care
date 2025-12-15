@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ghar_care/common/my_snackbar.dart';
-import 'package:ghar_care/screens/dashboard_screen.dart';
+import 'package:ghar_care/screens/navigation_screen.dart';
 import 'package:ghar_care/screens/signup_screen.dart';
 import 'package:ghar_care/widgets/my_button.dart';
 import 'package:ghar_care/widgets/my_textformfield.dart';
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DashboardScreen()),
       );
