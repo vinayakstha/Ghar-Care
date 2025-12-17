@@ -80,7 +80,7 @@ flutter:
     - family: Inter Bold
       fonts:
         - asset: assets/fonts/Inter_Bold.ttf
-    - family:
+    - family: Inter Italic
       fonts:
         - asset: assets/fonts/Inter_Italic.ttf
   #       - asset: fonts/Schyler-Italic.ttf
