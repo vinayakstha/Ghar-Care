@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ghar_care/widgets/category_card.dart';
 import 'package:ghar_care/widgets/home_header.dart';
 import 'package:ghar_care/widgets/offer_card.dart';
+import 'package:ghar_care/widgets/upcomming_booking_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: promo.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.only(right: 12),
+                            padding: const EdgeInsets.only(right: 9),
                             child: promo[index],
                           );
                         },
@@ -77,7 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Categories", style: TextStyle(fontSize: 22)),
+                          Text(
+                            "Categories",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "Inter bold",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           TextButton(
                             onPressed: () {},
                             child: Text(
@@ -96,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(12),
                       children: categories,
                     ),
+                    UpcomingBookingCard(),
                   ],
                 ),
               ),
