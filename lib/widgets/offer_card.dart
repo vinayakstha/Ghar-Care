@@ -4,14 +4,12 @@ class OfferCard extends StatelessWidget {
   const OfferCard({
     super.key,
     required this.title,
-    required this.description1,
-    required this.description2,
+    required this.description,
     required this.imagePath,
   });
 
   final String title;
-  final String description1;
-  final String description2;
+  final String description;
   final String imagePath;
 
   @override
@@ -29,7 +27,7 @@ class OfferCard extends StatelessWidget {
               Positioned.fill(child: Image.asset(imagePath, fit: BoxFit.cover)),
 
               Positioned.fill(
-                child: Container(color: Colors.black.withOpacity(0.3)),
+                child: Container(color: Colors.black.withOpacity(0.4)),
               ),
 
               Padding(
@@ -39,6 +37,15 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
+                      "Today's Special!",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "Inter Bold",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
                       title,
                       style: const TextStyle(
                         fontSize: 26,
@@ -46,23 +53,22 @@ class OfferCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      description1,
-                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                    const SizedBox(height: 2),
+                    Flexible(
+                      child: Text(
+                        description,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.card_giftcard,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          description2,
-                          style: const TextStyle(color: Colors.white),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Book Now"),
                         ),
                       ],
                     ),

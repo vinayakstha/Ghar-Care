@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ghar_care/widgets/category_card.dart';
 import 'package:ghar_care/widgets/home_header.dart';
 import 'package:ghar_care/widgets/offer_card.dart';
-import 'package:ghar_care/widgets/upcomming_booking_card.dart';
+import 'package:ghar_care/widgets/upcoming_booking_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,22 +14,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> promo = [
     OfferCard(
-      title: "20% OFF",
-      description1: "For 1 day",
-      description2: "D3T22U",
+      title: "GET 20% OFF",
+      description: "On all Services",
       imagePath: "assets/images/offer_image.jpg",
     ),
     OfferCard(
-      title: "20% OFF",
-      description1: "For 1 day",
-      description2: "D3T22U",
+      title: "GET 20% OFF",
+      description: "On all Services",
       imagePath: "assets/images/offer_image.jpg",
-    ),
-    OfferCard(
-      title: "20% OFF",
-      description1: "For 1 day",
-      description2: "D3T22U",
-      imagePath: "assets/images/card_image.png",
     ),
   ];
 
@@ -97,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     GridView.count(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,

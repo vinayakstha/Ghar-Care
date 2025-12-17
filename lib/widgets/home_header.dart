@@ -10,8 +10,8 @@ class HomeHeader extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Color(0xFF006BAA),
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+          bottomLeft: Radius.circular(18),
+          bottomRight: Radius.circular(18),
         ),
       ),
       child: SafeArea(
