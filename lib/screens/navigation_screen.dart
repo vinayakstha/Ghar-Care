@@ -4,14 +4,14 @@ import 'package:ghar_care/screens/bottom_screens/home_screen.dart';
 import 'package:ghar_care/screens/bottom_screens/profile_screen.dart';
 import 'package:ghar_care/screens/bottom_screens/task_screen.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class NavigationScreen extends StatefulWidget {
+  const NavigationScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
 
   List<Widget> lstBottomScreen = [

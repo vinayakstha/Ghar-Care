@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {
-  return ThemeData(fontFamily: "Inter Regular");
+  return ThemeData(
+    fontFamily: "Inter Regular",
+    scaffoldBackgroundColor: Colors.white,
+  );
 }

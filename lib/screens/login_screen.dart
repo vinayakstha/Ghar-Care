@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DashboardScreen()),
+        MaterialPageRoute(builder: (context) => NavigationScreen()),
       );
       showSnackBar(context: context, message: "Login Successfull!");
     }

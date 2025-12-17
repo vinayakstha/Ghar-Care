@@ -17,7 +17,7 @@ class OfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 9, 0, 1),
+      padding: const EdgeInsets.fromLTRB(10, 9, 0, 1),
       child: Container(
         height: 160,
         width: MediaQuery.of(context).size.width * 0.9,
