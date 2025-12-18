@@ -87,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       "Skip",
                       style: TextStyle(
                         color: Colors.grey,
-                        fontSize: 21,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -102,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 _currentIndex == _pages.length - 1 ? "Get Started" : "Next",
                 style: TextStyle(
                   color: Color(0xFF0066BAA),
-                  fontSize: 21,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
