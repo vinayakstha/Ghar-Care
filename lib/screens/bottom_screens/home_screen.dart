@@ -88,14 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    GridView.count(
+
+                    GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
                       padding: const EdgeInsets.all(12),
-                      children: categories,
+                      itemCount: categories.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 150,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 0.95,
+                          ),
+                      itemBuilder: (context, index) => categories[index],
                     ),
                     UpcomingBookingCard(),
                   ],
