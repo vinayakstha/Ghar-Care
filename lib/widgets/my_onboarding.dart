@@ -20,15 +20,19 @@ class MyOnboarding extends StatelessWidget {
         SizedBox(height: 30),
         Text(
           title,
-          style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 29,
+            fontWeight: FontWeight.bold,
+            fontFamily: "Inter Bold",
+          ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 14),
         Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
           child: Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: Colors.grey),
+            style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
         ),
       ],

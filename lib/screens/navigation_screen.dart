@@ -36,7 +36,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         },
         selectedItemColor: Color(0xff006baa),
         iconSize: 30,
-
+        backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: ""),

@@ -44,11 +44,11 @@ class UpcomingBookingCard extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
 
             // Separator Line
             Divider(color: Colors.grey.shade200, thickness: 1),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
 
             Row(
               children: [

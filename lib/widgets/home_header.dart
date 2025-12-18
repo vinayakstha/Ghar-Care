@@ -49,6 +49,7 @@ class HomeHeader extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,
+                fontFamily: "Inter Bold",
                 fontWeight: FontWeight.bold,
               ),
             ),
