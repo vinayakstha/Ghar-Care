@@ -36,8 +36,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   smooth_page_indicator:
 
+  # Hive Database
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+
+  equatable: ^2.0.7
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
