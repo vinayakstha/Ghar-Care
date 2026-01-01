@@ -36,6 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   smooth_page_indicator:
 
+  # State Management
+  flutter_riverpod: ^3.0.3
+  riverpod_annotation: ^3.0.3
+
   # Hive Database
   hive: ^2.2.3
   hive_flutter: ^1.1.0

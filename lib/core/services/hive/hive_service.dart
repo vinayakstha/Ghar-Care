@@ -1,7 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/constants/hive_table_constant.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+
+final hiveServiceProvider = Provider<HiveService>((ref) {
+  return HiveService();
+});
 
 class HiveService {
   //init
@@ -49,11 +54,14 @@ class HiveService {
     return null;
   }
 
-  Future<void> logout(String authId) async {
-    await _authBox.delete(authId);
-  }
+  Future<void> logoutUser() async {}
 
   AuthHiveModel? getCurrentUser(String authId) {
     return _authBox.get(authId);
+  }
+
+  bool isEmailExists(String email) {
+    final users = _authBox.values.where((user) => user.email == email);
+    return users.isNotEmpty;
   }
 }
