@@ -67,10 +67,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           color: Colors.red,
         );
       } else if (next.status == AuthStatus.registered) {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => LoginScreen()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
         showSnackBar(
           context: context,
           message: "Registration successful",

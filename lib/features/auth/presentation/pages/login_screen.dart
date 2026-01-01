@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/utils/my_snackbar.dart';
+import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
+import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
 import 'package:ghar_care/screens/navigation_screen.dart';
 import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final emailCtrl = TextEditingController();
@@ -27,18 +30,45 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NavigationScreen()),
-      );
-      showSnackBar(context: context, message: "Login Successfull!");
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => NavigationScreen()),
+      // );
+      // showSnackBar(context: context, message: "Login Successfull!");
+      await ref
+          .read(authViewModelProvider.notifier)
+          .login(
+            email: emailCtrl.text.trim(),
+            password: passwordCtrl.text.trim(),
+          );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthState>(authViewModelProvider, (previous, next) {
+      if (next.status == AuthStatus.authenticated) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => NavigationScreen()),
+        );
+
+        showSnackBar(
+          context: context,
+          message: "Login Successful",
+          color: Colors.green,
+        );
+      } else if (next.status == AuthStatus.error && next.errorMessage != null) {
+        showSnackBar(
+          context: context,
+          message: next.errorMessage!,
+          color: Colors.red,
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
       body: SafeArea(
