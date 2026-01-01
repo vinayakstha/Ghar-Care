@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/screens/signup_screen.dart';
+import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
 import 'package:ghar_care/widgets/my_onboarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

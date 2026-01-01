@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/common/my_snackbar.dart';
+import 'package:ghar_care/core/utils/my_snackbar.dart';
 import 'package:ghar_care/screens/navigation_screen.dart';
-import 'package:ghar_care/screens/signup_screen.dart';
-import 'package:ghar_care/widgets/my_button.dart';
-import 'package:ghar_care/widgets/my_textformfield.dart';
+import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
+import 'package:ghar_care/core/widgets/my_button.dart';
+import 'package:ghar_care/core/widgets/my_textformfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

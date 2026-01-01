@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/common/my_snackbar.dart';
-import 'package:ghar_care/screens/login_screen.dart';
-import 'package:ghar_care/widgets/my_button.dart';
-import 'package:ghar_care/widgets/my_textformfield.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/core/utils/my_snackbar.dart';
+import 'package:ghar_care/features/auth/presentation/pages/login_screen.dart';
+import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
+import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
+import 'package:ghar_care/core/widgets/my_button.dart';
+import 'package:ghar_care/core/widgets/my_textformfield.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final firstNameCtrl = TextEditingController();
@@ -20,11 +23,62 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailCtrl = TextEditingController();
   final phoneCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
+  final confirmPasswordCtrl = TextEditingController();
 
+  bool hideConfirmPassword = true;
   bool hidePassword = true;
 
   @override
+  void dispose() {
+    firstNameCtrl.dispose();
+    lastNameCtrl.dispose();
+    usernameCtrl.dispose();
+    emailCtrl.dispose();
+    phoneCtrl.dispose();
+    passwordCtrl.dispose();
+    confirmPasswordCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSignup() async {
+    if (_formKey.currentState!.validate()) {
+      ref
+          .read(authViewModelProvider.notifier)
+          .register(
+            firstName: firstNameCtrl.text,
+            lastName: lastNameCtrl.text,
+            username: usernameCtrl.text,
+            email: emailCtrl.text,
+            phoneNumber: phoneCtrl.text,
+            password: passwordCtrl.text,
+          );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authViewModelProvider);
+
+    ref.listen<AuthState>(authViewModelProvider, (previous, next) {
+      if (next.status == AuthStatus.error) {
+        showSnackBar(
+          context: context,
+          message: next.errorMessage ?? "Registration failed",
+          color: Colors.red,
+        );
+      } else if (next.status == AuthStatus.registered) {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => LoginScreen()),
+        // );
+        showSnackBar(
+          context: context,
+          message: "Registration successful",
+          color: Colors.green,
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
       body: SingleChildScrollView(
@@ -156,24 +210,38 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
+
+              // Confirm Password
+              MyTextformfield(
+                controller: confirmPasswordCtrl,
+                labelText: "Confirm Password",
+                prefixIcon: Icons.lock_outline,
+                obscureText: hideConfirmPassword,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Confirm your password";
+                  }
+                  if (value != passwordCtrl.text) {
+                    return "Passwords do not match";
+                  }
+                  return null;
+                },
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    hideConfirmPassword
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() => hideConfirmPassword = !hideConfirmPassword);
+                  },
+                ),
+              ),
+              const SizedBox(height: 15),
 
               // Create Account Button
-              MyButton(
-                text: "Create Account",
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                    showSnackBar(
-                      context: context,
-                      message: "Sign up successful!",
-                    );
-                  }
-                },
-              ),
+              MyButton(text: "Create Account", onPressed: _handleSignup),
 
               const SizedBox(height: 25),
 

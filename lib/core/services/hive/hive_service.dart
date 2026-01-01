@@ -15,11 +15,12 @@ class HiveService {
     final path = '${directory.path}/${HiveTableConstant.dbName}';
     Hive.init(path);
     _registerAdapter();
+    await openBoxes();
   }
 
   //register adapter
   void _registerAdapter() {
-    if (Hive.isAdapterRegistered(HiveTableConstant.authTypeId)) {
+    if (!Hive.isAdapterRegistered(HiveTableConstant.authTypeId)) {
       Hive.registerAdapter(AuthHiveModelAdapter());
     }
   }
