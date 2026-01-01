@@ -8,7 +8,7 @@ import 'package:ghar_care/features/auth/domain/entities/auth_entity.dart';
 import 'package:ghar_care/features/auth/domain/repositories/auth_repository.dart';
 
 //provider
-final authRepository = Provider<IAuthRepository>((ref) {
+final authRepositoryProvider = Provider<IAuthRepository>((ref) {
   return AuthRepository(authDatasource: ref.read(AuthLocalDatasourceProvider));
 });
 
