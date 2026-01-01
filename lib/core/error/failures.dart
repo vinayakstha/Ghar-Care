@@ -6,7 +6,7 @@ abstract class Failure extends Equatable {
   const Failure(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }
 
 class LocalDatabaseFailure extends Failure {
@@ -19,4 +19,7 @@ class ApiFailure extends Failure {
   final int? statusCode;
 
   const ApiFailure({this.statusCode, required String message}) : super(message);
+
+  @override
+  List<Object?> get props => [message, statusCode];
 }
