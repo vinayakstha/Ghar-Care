@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/common/my_snackbar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/app/routes/app_routes.dart';
+import 'package:ghar_care/core/utils/snackbar_utils.dart';
+import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
+import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
 import 'package:ghar_care/screens/navigation_screen.dart';
-import 'package:ghar_care/screens/signup_screen.dart';
-import 'package:ghar_care/widgets/my_button.dart';
-import 'package:ghar_care/widgets/my_textformfield.dart';
+import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
+import 'package:ghar_care/core/widgets/my_button.dart';
+import 'package:ghar_care/core/widgets/my_textformfield.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final emailCtrl = TextEditingController();
@@ -27,18 +31,35 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NavigationScreen()),
-      );
-      showSnackBar(context: context, message: "Login Successfull!");
+      await ref
+          .read(authViewModelProvider.notifier)
+          .login(
+            email: emailCtrl.text.trim(),
+            password: passwordCtrl.text.trim(),
+          );
     }
+  }
+
+  void _navigateToSignup() {
+    AppRoutes.push(context, const SignupScreen());
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthState>(authViewModelProvider, (previous, next) {
+      if (previous?.status != next.status) {
+        if (next.status == AuthStatus.authenticated) {
+          AppRoutes.pushReplacement(context, const NavigationScreen());
+          SnackbarUtils.showSuccess(context, "Login Successful");
+        } else if (next.status == AuthStatus.error &&
+            next.errorMessage != null) {
+          SnackbarUtils.showError(context, next.errorMessage!);
+        }
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
       body: SafeArea(
@@ -177,14 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: _navigateToSignup,
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(fontWeight: FontWeight.bold),
