@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghar_care/core/utils/my_snackbar.dart';
-import 'package:ghar_care/features/auth/presentation/pages/login_screen.dart';
+import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
 import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
@@ -40,6 +39,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     super.dispose();
   }
 
+  void _navigateToLogin() {
+    Navigator.of(context).pop();
+  }
+
   Future<void> _handleSignup() async {
     if (_formKey.currentState!.validate()) {
       ref
@@ -60,22 +63,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final authState = ref.watch(authViewModelProvider);
 
     ref.listen<AuthState>(authViewModelProvider, (previous, next) {
-      if (next.status == AuthStatus.error) {
-        showSnackBar(
-          context: context,
-          message: next.errorMessage ?? "Registration failed",
-          color: Colors.red,
-        );
-      } else if (next.status == AuthStatus.registered) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-        );
-        showSnackBar(
-          context: context,
-          message: "Registration successful",
-          color: Colors.green,
-        );
+      if (previous?.status != next.status) {
+        if (next.status == AuthStatus.error) {
+          SnackbarUtils.showError(context, next.errorMessage!);
+        } else if (next.status == AuthStatus.registered) {
+          Navigator.of(context).pop();
+          SnackbarUtils.showSuccess(context, 'Registration successful!');
+        }
       }
     });
 
@@ -273,6 +267,21 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 ),
               ),
               const SizedBox(width: 25),
+
+              // Link to login screen
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Already have an account?"),
+                  TextButton(
+                    onPressed: _navigateToLogin,
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghar_care/core/utils/my_snackbar.dart';
+import 'package:ghar_care/app/routes/app_routes.dart';
+import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
 import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
 import 'package:ghar_care/screens/navigation_screen.dart';
@@ -32,11 +33,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => NavigationScreen()),
-      // );
-      // showSnackBar(context: context, message: "Login Successfull!");
       await ref
           .read(authViewModelProvider.notifier)
           .login(
@@ -46,26 +42,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  void _navigateToSignup() {
+    AppRoutes.push(context, const SignupScreen());
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen<AuthState>(authViewModelProvider, (previous, next) {
-      if (next.status == AuthStatus.authenticated) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => NavigationScreen()),
-        );
-
-        showSnackBar(
-          context: context,
-          message: "Login Successful",
-          color: Colors.green,
-        );
-      } else if (next.status == AuthStatus.error && next.errorMessage != null) {
-        showSnackBar(
-          context: context,
-          message: next.errorMessage!,
-          color: Colors.red,
-        );
+      if (previous?.status != next.status) {
+        if (next.status == AuthStatus.authenticated) {
+          AppRoutes.pushReplacement(context, const NavigationScreen());
+          SnackbarUtils.showSuccess(context, "Login Successful");
+        } else if (next.status == AuthStatus.error &&
+            next.errorMessage != null) {
+          SnackbarUtils.showError(context, next.errorMessage!);
+        }
       }
     });
 
@@ -207,14 +198,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: _navigateToSignup,
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(fontWeight: FontWeight.bold),
