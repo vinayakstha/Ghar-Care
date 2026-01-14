@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ghar_care/features/auth/presentation/pages/login_screen.dart';
-import 'package:ghar_care/widgets/my_onboarding.dart';
+import 'package:ghar_care/features/onboarding/presentation/widgets/my_onboarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {

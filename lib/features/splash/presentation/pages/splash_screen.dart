@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/services/storage/user_session_service.dart';
-import 'package:ghar_care/screens/navigation_screen.dart';
-import 'package:ghar_care/screens/onboarding_screen.dart';
+import 'package:ghar_care/features/dashboard/presentation/pages/navigation_screen.dart';
+import 'package:ghar_care/features/onboarding/presentation/pages/onboarding_screen.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});

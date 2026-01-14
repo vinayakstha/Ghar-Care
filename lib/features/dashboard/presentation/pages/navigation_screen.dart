@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/screens/bottom_screens/favourite_screen.dart';
-import 'package:ghar_care/screens/bottom_screens/home_screen.dart';
-import 'package:ghar_care/screens/bottom_screens/profile_screen.dart';
-import 'package:ghar_care/screens/bottom_screens/task_screen.dart';
+import 'package:ghar_care/features/dashboard/presentation/pages/bottom_screens/favourite_screen.dart';
+import 'package:ghar_care/features/dashboard/presentation/pages/bottom_screens/home_screen.dart';
+import 'package:ghar_care/features/dashboard/presentation/pages/bottom_screens/profile_screen.dart';
+import 'package:ghar_care/features/dashboard/presentation/pages/bottom_screens/task_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
