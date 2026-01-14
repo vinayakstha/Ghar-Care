@@ -26,6 +26,7 @@ class AuthRepository implements IAuthRepository {
         final entity = user.toEntity();
         return Right(entity);
       }
+      return (Left(LocalDatabaseFailure(message: 'No current user found')));
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
     }
@@ -42,6 +43,7 @@ class AuthRepository implements IAuthRepository {
         final entity = user.toEntity();
         return Right(entity);
       }
+      return (Left(LocalDatabaseFailure(message: 'Invalid email or password')));
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
     }
@@ -50,7 +52,7 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<Either<Failure, bool>> logout() async {
     try {
-      final result = await _authDatasource.logoutUser();
+      final result = await _authDatasource.logout();
       if (result) {
         return Right(true);
       }
