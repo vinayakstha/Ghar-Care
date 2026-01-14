@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/widgets/category_card.dart';
-import 'package:ghar_care/widgets/home_header.dart';
-import 'package:ghar_care/widgets/offer_card.dart';
-import 'package:ghar_care/widgets/upcoming_booking_card.dart';
+import 'package:ghar_care/features/dashboard/presentation/widgets/category_card.dart';
+import 'package:ghar_care/features/dashboard/presentation/widgets/home_header.dart';
+import 'package:ghar_care/features/dashboard/presentation/widgets/offer_card.dart';
+import 'package:ghar_care/features/dashboard/presentation/widgets/upcoming_booking_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
