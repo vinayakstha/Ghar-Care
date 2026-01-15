@@ -5,7 +5,7 @@ import 'package:ghar_care/features/auth/data/datasource/auth_datasource.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 
 //provider
-final AuthLocalDatasourceProvider = Provider<AuthLocalDatasource>((ref) {
+final authLocalDatasourceProvider = Provider<AuthLocalDatasource>((ref) {
   final hiveService = ref.read(hiveServiceProvider);
   final userSessionService = ref.read(userSessionServiceProvider);
   return AuthLocalDatasource(

@@ -1,27 +1,45 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/error/failures.dart';
+import 'package:ghar_care/core/services/connectivity/network_info.dart';
 import 'package:ghar_care/features/auth/data/datasource/auth_datasource.dart';
 import 'package:ghar_care/features/auth/data/datasource/local/auth_local_datasource.dart';
+import 'package:ghar_care/features/auth/data/datasource/remote/auth_remote_datasource.dart';
+import 'package:ghar_care/features/auth/data/models/auth_api_model.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 import 'package:ghar_care/features/auth/domain/entities/auth_entity.dart';
 import 'package:ghar_care/features/auth/domain/repositories/auth_repository.dart';
 
 //provider
 final authRepositoryProvider = Provider<IAuthRepository>((ref) {
-  return AuthRepository(authDatasource: ref.read(AuthLocalDatasourceProvider));
+  final authLocalDataSource = ref.read(authLocalDatasourceProvider);
+  final authRemoteDataSource = ref.read(authRemoteDataSourceProvider);
+  final networkInfo = ref.read(networkInfoProvider);
+  return AuthRepository(
+    authLocalDataSource: authLocalDataSource,
+    authRemoteDataSource: authRemoteDataSource,
+    networkInfo: networkInfo,
+  );
 });
 
 class AuthRepository implements IAuthRepository {
-  final IAuthLocalDataSource _authDatasource;
+  final IAuthLocalDataSource _authLocalDataSource;
+  final IAuthRemoteDataSource _authRemoteDataSource;
+  final NetworkInfo _networkInfo;
 
-  AuthRepository({required IAuthLocalDataSource authDatasource})
-    : _authDatasource = authDatasource;
+  AuthRepository({
+    required IAuthLocalDataSource authLocalDataSource,
+    required IAuthRemoteDataSource authRemoteDataSource,
+    required NetworkInfo networkInfo,
+  }) : _authLocalDataSource = authLocalDataSource,
+       _authRemoteDataSource = authRemoteDataSource,
+       _networkInfo = networkInfo;
 
   @override
   Future<Either<Failure, AuthEntity>> getCurrentUser() async {
     try {
-      final user = await _authDatasource.getCurrentUser();
+      final user = await _authLocalDataSource.getCurrentUser();
       if (user != null) {
         final entity = user.toEntity();
         return Right(entity);
@@ -38,7 +56,7 @@ class AuthRepository implements IAuthRepository {
     String password,
   ) async {
     try {
-      final user = await _authDatasource.login(email, password);
+      final user = await _authLocalDataSource.login(email, password);
       if (user != null) {
         final entity = user.toEntity();
         return Right(entity);
@@ -52,7 +70,7 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<Either<Failure, bool>> logout() async {
     try {
-      final result = await _authDatasource.logout();
+      final result = await _authLocalDataSource.logout();
       if (result) {
         return Right(true);
       }
@@ -64,15 +82,32 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<Either<Failure, bool>> register(AuthEntity authEntity) async {
-    try {
-      final model = AuthHiveModel.fromEntity(authEntity);
-      final result = await _authDatasource.register(model);
-      if (result) {
-        return Right(true);
+    if (await _networkInfo.isConnected) {
+      try {
+        final apiModel = AuthApiModel.fromEntity(authEntity);
+        await _authRemoteDataSource.register(apiModel);
+        return const Right(true);
+      } on DioException catch (e) {
+        return Left(
+          ApiFailure(
+            message: e.response?.data['message'] ?? "Registration failed",
+            statusCode: e.response?.statusCode,
+          ),
+        );
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
       }
-      return Left(LocalDatabaseFailure(message: "failed to register user"));
-    } catch (e) {
-      return Left(LocalDatabaseFailure(message: e.toString()));
+    } else {
+      try {
+        final model = AuthHiveModel.fromEntity(authEntity);
+        final result = await _authLocalDataSource.register(model);
+        if (result) {
+          return Right(true);
+        }
+        return Left(LocalDatabaseFailure(message: "failed to register user"));
+      } catch (e) {
+        return Left(LocalDatabaseFailure(message: e.toString()));
+      }
     }
   }
 }

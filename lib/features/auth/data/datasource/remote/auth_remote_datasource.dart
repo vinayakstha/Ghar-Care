@@ -5,7 +5,7 @@ import 'package:ghar_care/core/services/storage/user_session_service.dart';
 import 'package:ghar_care/features/auth/data/datasource/auth_datasource.dart';
 import 'package:ghar_care/features/auth/data/models/auth_api_model.dart';
 
-final authRemoteProvider = Provider<IAuthRemoteDataSource>((ref) {
+final authRemoteDataSourceProvider = Provider<IAuthRemoteDataSource>((ref) {
   return AuthRemoteDatasource(
     apiClient: ref.read(apiClientProvider),
     userSessionService: ref.read(userSessionServiceProvider),
