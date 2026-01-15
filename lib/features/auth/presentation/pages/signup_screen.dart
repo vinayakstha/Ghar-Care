@@ -54,6 +54,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             email: emailCtrl.text,
             phoneNumber: phoneCtrl.text,
             password: passwordCtrl.text,
+            confirmPassword: confirmPasswordCtrl.text,
           );
     }
   }
