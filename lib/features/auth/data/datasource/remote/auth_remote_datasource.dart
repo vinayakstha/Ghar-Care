@@ -34,6 +34,22 @@ class AuthRemoteDatasource implements IAuthRemoteDataSource {
       ApiEndpoints.login,
       data: {'email': email, 'password': password},
     );
+
+    if (response.data['success'] == true) {
+      final data = response.data['data'] as Map<String, dynamic>;
+      final user = AuthApiModel.fromJson(data);
+
+      await _userSessionService.saveUserSession(
+        userId: user.id!,
+        email: user.email,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+      );
+      return user;
+    }
+    return null;
   }
 
   @override
