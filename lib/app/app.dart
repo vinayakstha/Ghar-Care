@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/screens/splash_screen.dart';
+import 'package:ghar_care/features/splash/presentation/pages/splash_screen.dart';
 import 'package:ghar_care/app/theme/theme_data.dart';
 
 class MyApp extends StatelessWidget {

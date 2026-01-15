@@ -4,7 +4,7 @@ import 'package:ghar_care/app/routes/app_routes.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
 import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
-import 'package:ghar_care/screens/navigation_screen.dart';
+import 'package:ghar_care/features/dashboard/presentation/pages/navigation_screen.dart';
 import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
