@@ -70,7 +70,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
               // Options
               _profileTile(
-                icon: Icons.edit,
+                icon: Icons.edit_outlined,
                 title: "Edit Profile",
                 onTap: () {},
               ),
@@ -82,7 +82,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               ),
 
               _profileTile(
-                icon: Icons.lock,
+                icon: Icons.lock_outline,
                 title: "Change Password",
                 onTap: () {},
               ),
