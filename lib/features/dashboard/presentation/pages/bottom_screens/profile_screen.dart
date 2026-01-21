@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghar_care/core/widgets/my_button.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -10,11 +9,127 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  // Mock user data (replace with provider data)
+  final String username = "Vinayak";
+  final String email = "vinayak@gmail.com";
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: MyButton(text: "logout", onPressed: () {}),
+    final String initial = username.isNotEmpty
+        ? username[0].toUpperCase()
+        : "?";
+
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(title: const Text("Profile"), centerTitle: true),
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+
+              // Profile Avatar
+              CircleAvatar(
+                radius: 65,
+                backgroundColor: Colors.blue,
+                child: Text(
+                  initial,
+                  style: const TextStyle(
+                    fontSize: 40,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              // Username (bigger & bolder)
+              Text(
+                username,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+
+              const SizedBox(height: 6),
+
+              // Email (bigger)
+              Text(
+                email,
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              const SizedBox(height: 36),
+
+              // Options
+              _profileTile(
+                icon: Icons.edit,
+                title: "Edit Profile",
+                onTap: () {},
+              ),
+
+              _profileTile(
+                icon: Icons.history,
+                title: "Booking History",
+                onTap: () {},
+              ),
+
+              _profileTile(
+                icon: Icons.lock,
+                title: "Change Password",
+                onTap: () {},
+              ),
+
+              _profileTile(
+                icon: Icons.logout,
+                title: "Logout",
+                color: Colors.red,
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _profileTile({
+    required IconData icon,
+    required String title,
+    Color? color,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      color: Colors.white,
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      child: SizedBox(
+        height: 67,
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 6,
+          ),
+          leading: Icon(icon, size: 26, color: color ?? Colors.black),
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              color: color ?? Colors.black,
+            ),
+          ),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: onTap,
+        ),
       ),
     );
   }
