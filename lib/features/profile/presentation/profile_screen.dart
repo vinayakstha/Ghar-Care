@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/app/routes/app_routes.dart';
+import 'package:ghar_care/features/profile_edit/presentation/profile_edit.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -72,7 +74,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               _profileTile(
                 icon: Icons.edit_outlined,
                 title: "Edit Profile",
-                onTap: () {},
+                onTap: () {
+                  AppRoutes.push(context, ProfileEditScreen());
+                },
               ),
 
               _profileTile(
@@ -123,7 +127,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             title,
             style: TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.w600,
+              // fontWeight: FontWeight.w600,
               color: color ?? Colors.black,
             ),
           ),
