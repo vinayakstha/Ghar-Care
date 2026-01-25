@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfileEditScreen extends ConsumerStatefulWidget {
   const ProfileEditScreen({super.key});
@@ -25,6 +27,60 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     _usernameController.dispose();
     _phoneController.dispose();
     super.dispose();
+  }
+
+  final List<XFile> _selectedMedia = [];
+  final ImagePicker _imagePicker = ImagePicker();
+
+  Future<bool> _askPermission(Permission permission) async {
+    final status = await permission.status;
+    if (status.isGranted) {
+      return true;
+    }
+
+    if (status.isDenied) {
+      final result = await permission.request();
+      return result.isGranted;
+    }
+
+    if (status.isPermanentlyDenied) {
+      _showPermissionDeniedDialog();
+      return false;
+    }
+    return false;
+  }
+
+  //code for camera
+  Future<void> _cameraAccess() async {
+    final hasPermission = await _askPermission(Permission.camera);
+    if (!hasPermission) {
+      return;
+    }
+
+    final XFile? photo = await _imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 80,
+    );
+
+    if (photo != null) {
+      setState(() {
+        _selectedMedia.clear();
+        _selectedMedia.add(photo);
+      });
+    }
+  }
+
+  void _showPermissionDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Give Permission"),
+        actions: [
+          TextButton(onPressed: () {}, child: Text("Cancle")),
+          TextButton(onPressed: () {}, child: Text("Open Settings")),
+        ],
+      ),
+    );
   }
 
   @override
