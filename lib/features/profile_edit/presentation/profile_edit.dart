@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
@@ -138,13 +140,19 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
               ListTile(
                 leading: Icon(Icons.camera),
                 title: Text("Open Camera"),
-                onTap: _pickFromCamera,
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickFromCamera();
+                },
               ),
 
               ListTile(
                 leading: Icon(Icons.photo_library),
                 title: Text("Open Gallery"),
-                onTap: _pickFromGallery,
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickFromGallery();
+                },
               ),
             ],
           ),
@@ -179,16 +187,21 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 alignment: Alignment.bottomRight,
                 children: [
                   CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.blue,
-                    child: Text(
-                      initial,
-                      style: const TextStyle(
-                        fontSize: 38,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    radius: 65,
+                    backgroundColor: const Color(0xFF006BAA),
+                    backgroundImage: _selectedMedia.isNotEmpty
+                        ? FileImage(File(_selectedMedia[0].path))
+                        : null,
+                    child: _selectedMedia.isNotEmpty
+                        ? null
+                        : Text(
+                            initial,
+                            style: const TextStyle(
+                              fontSize: 38,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                   InkWell(
                     onTap: () {
@@ -200,7 +213,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                       child: Icon(
                         Icons.camera_alt,
                         size: 18,
-                        color: Colors.blue,
+                        color: const Color(0xFF006BAA),
                       ),
                     ),
                   ),

@@ -34,7 +34,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               // Profile Avatar
               CircleAvatar(
                 radius: 65,
-                backgroundColor: Colors.blue,
+                backgroundColor: const Color(0xFF006BAA),
                 child: Text(
                   initial,
                   style: const TextStyle(
