@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,8 +51,21 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     return false;
   }
 
+  void _showPermissionDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Give Permission"),
+        actions: [
+          TextButton(onPressed: () {}, child: Text("Cancle")),
+          TextButton(onPressed: () {}, child: Text("Open Settings")),
+        ],
+      ),
+    );
+  }
+
   //code for camera
-  Future<void> _cameraAccess() async {
+  Future<void> _pickFromCamera() async {
     final hasPermission = await _askPermission(Permission.camera);
     if (!hasPermission) {
       return;
@@ -70,15 +84,71 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     }
   }
 
-  void _showPermissionDeniedDialog() {
-    showDialog(
+  //code for gallery
+  Future<void> _pickFromGallery({bool allowMultiple = false}) async {
+    try {
+      if (allowMultiple) {
+        final List<XFile> images = await _imagePicker.pickMultiImage(
+          imageQuality: 80,
+        );
+
+        if (images.isNotEmpty) {
+          setState(() {
+            _selectedMedia.clear();
+            _selectedMedia.addAll(images);
+          });
+        }
+      } else {
+        final XFile? image = await _imagePicker.pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 80,
+        );
+        if (image != null) {
+          setState(() {
+            setState(() {
+              _selectedMedia.clear();
+              _selectedMedia.add(image);
+            });
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint("Gallery error");
+
+      if (mounted) {
+        SnackbarUtils.showError(context, "Gallery access denied");
+      }
+    }
+  }
+
+  //code for dialogbox for menu
+  Future<void> _pickMedia() async {
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Give Permission"),
-        actions: [
-          TextButton(onPressed: () {}, child: Text("Cancle")),
-          TextButton(onPressed: () {}, child: Text("Open Settings")),
-        ],
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text("Open Camera"),
+                onTap: _pickFromCamera,
+              ),
+
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text("Open Gallery"),
+                onTap: _pickFromGallery,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -122,7 +192,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      // TODO: image picker
+                      _pickMedia();
                     },
                     child: const CircleAvatar(
                       radius: 18,
