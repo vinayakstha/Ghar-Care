@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/api/api_client.dart';
 import 'package:ghar_care/core/api/api_endpoints.dart';
@@ -73,5 +76,25 @@ class AuthRemoteDatasource implements IAuthRemoteDataSource {
       return registeredUser;
     }
     return user;
+  }
+
+  @override
+  Future<String> uploadImage(File image) async {
+    final fileName = image.path.split('/').last;
+    final formData = FormData.fromMap({
+      "profilePicture": await MultipartFile.fromFile(
+        image.path,
+        filename: fileName,
+      ),
+    });
+    // get token from token service
+    final token = _tokenService.getToken();
+    final response = await _apiClient.updateFile(
+      ApiEndpoints.updateProfile,
+      formData: formData,
+      options: Options(headers: {"Authorization": "Bearer $token"}),
+    );
+
+    return response.data['data'];
   }
 }

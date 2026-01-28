@@ -30,6 +30,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
+              Text(
+                "My Profile",
+
+                style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
 
               // Profile Avatar
               CircleAvatar(

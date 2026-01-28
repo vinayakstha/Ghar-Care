@@ -6,6 +6,7 @@ import 'package:ghar_care/core/services/storage/user_session_service.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
+import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -94,6 +95,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         _selectedMedia.clear();
         _selectedMedia.add(photo);
       });
+
+      //upload image to server
+      await ref
+          .read(authViewModelProvider.notifier)
+          .uploadImage(File(photo.path));
     }
   }
 
@@ -118,11 +124,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         );
         if (image != null) {
           setState(() {
-            setState(() {
-              _selectedMedia.clear();
-              _selectedMedia.add(image);
-            });
+            _selectedMedia.clear();
+            _selectedMedia.add(image);
           });
+
+          //upload image to server
+          await ref
+              .read(authViewModelProvider.notifier)
+              .uploadImage(File(image.path));
         }
       }
     } catch (e) {
@@ -149,8 +158,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text("Open Camera"),
+                leading: Icon(Icons.camera_alt),
+                title: Text("Take Photo"),
                 onTap: () {
                   Navigator.pop(context);
                   _pickFromCamera();
@@ -159,7 +168,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
               ListTile(
                 leading: Icon(Icons.photo_library),
-                title: Text("Open Gallery"),
+                title: Text("Select From Gallery"),
                 onTap: () {
                   Navigator.pop(context);
                   _pickFromGallery();
@@ -222,7 +231,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       radius: 18,
                       backgroundColor: Colors.white,
                       child: Icon(
-                        Icons.camera_alt,
+                        Icons.edit,
                         size: 18,
                         color: const Color(0xFF006BAA),
                       ),
