@@ -2,26 +2,37 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/core/services/storage/user_session_service.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class ProfileEditScreen extends ConsumerStatefulWidget {
-  const ProfileEditScreen({super.key});
+class EditProfileScreen extends ConsumerStatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  ConsumerState<ProfileEditScreen> createState() => _ProfileEditScreenState();
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final _firstNameController = TextEditingController(text: "Vinayak");
-  final _lastNameController = TextEditingController(text: "Shrestha");
-  final _usernameController = TextEditingController(text: "Vinayak");
-  final _phoneController = TextEditingController(text: "98XXXXXXXX");
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final session = ref.read(userSessionServiceProvider);
+    _firstNameController.text = session.getUserFirstName() ?? "";
+    _lastNameController.text = session.getUserLastName() ?? "";
+    _usernameController.text = session.getUsername() ?? "";
+    _phoneController.text = session.getUserPhoneNumber() ?? "";
+  }
 
   @override
   void dispose() {
@@ -223,6 +234,20 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
               const SizedBox(height: 30),
 
               MyTextformfield(
+                controller: _usernameController,
+                labelText: "Username",
+                prefixIcon: Icons.account_circle_outlined,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Username is required";
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 16),
+
+              MyTextformfield(
                 controller: _firstNameController,
                 labelText: "First Name",
                 prefixIcon: Icons.person_outline,
@@ -243,20 +268,6 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Last name is required";
-                  }
-                  return null;
-                },
-              ),
-
-              const SizedBox(height: 16),
-
-              MyTextformfield(
-                controller: _usernameController,
-                labelText: "Username",
-                prefixIcon: Icons.account_circle_outlined,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Username is required";
                   }
                   return null;
                 },
