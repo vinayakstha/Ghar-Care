@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/features/auth/domain/usecases/get_user_by_id_usecase.dart';
-import 'package:ghar_care/features/auth/domain/usecases/login_usercase.dart';
+import 'package:ghar_care/features/auth/domain/usecases/login_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/register_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/upload_image_usecase.dart';

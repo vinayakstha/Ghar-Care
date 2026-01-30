@@ -704,6 +704,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  mocktail:
+    dependency: "direct main"
+    description:
+      name: mocktail
+      sha256: "890df3f9688106f25755f26b1c60589a92b3ab91a22b8b224947ad041bf172d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   nm:
     dependency: transitive
     description:
@@ -1117,6 +1125,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.12"
+  test_cov_console:
+    dependency: "direct main"
+    description:
+      name: test_cov_console
+      sha256: "73519e8be3689d73f5cffb652c12c310acacf48379396d834da937094836e65e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   timing:
     dependency: transitive
     description:
