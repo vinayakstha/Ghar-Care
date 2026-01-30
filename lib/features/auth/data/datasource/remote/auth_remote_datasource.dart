@@ -31,9 +31,15 @@ class AuthRemoteDatasource implements IAuthRemoteDataSource {
        _tokenService = tokenService;
 
   @override
-  Future<AuthApiModel?> getUserById(String authId) {
-    // TODO: implement getUserById
-    throw UnimplementedError();
+  Future<AuthApiModel?> getUserById(String authId) async {
+    final response = await _apiClient.get(
+      "${ApiEndpoints.getUserById}/$authId",
+    );
+    if (response.data == null) {
+      return null;
+    }
+    final user = AuthApiModel.fromJson(response.data);
+    return user;
   }
 
   @override

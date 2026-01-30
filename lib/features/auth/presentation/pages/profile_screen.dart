@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/app/routes/app_routes.dart';
+import 'package:ghar_care/app/theme/app_colors.dart';
 import 'package:ghar_care/features/auth/presentation/pages/edit_profile.dart';
+import 'package:ghar_care/features/auth/presentation/pages/login_screen.dart';
+import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
+import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
+import 'package:ghar_care/core/utils/snackbar_utils.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -20,6 +25,45 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final String initial = username.isNotEmpty
         ? username[0].toUpperCase()
         : "?";
+
+    Future<void> _showLogoutDialog() async {
+      final shouldLogout = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            'Logout',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text('Are you sure you want to logout?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Yes'),
+            ),
+          ],
+        ),
+      );
+
+      if (shouldLogout == true) {
+        // call logout usecase
+        await ref.read(authViewModelProvider.notifier).logout();
+
+        final state = ref.read(authViewModelProvider);
+        if (state.status == AuthStatus.unauthenticated) {
+          AppRoutes.pushAndRemoveUntil(context, const LoginScreen());
+          SnackbarUtils.showSuccess(context, 'Logged out successfully');
+        } else if (state.status == AuthStatus.error &&
+            state.errorMessage != null) {
+          SnackbarUtils.showError(context, state.errorMessage!);
+        } else {
+          SnackbarUtils.showError(context, 'Logout failed');
+        }
+      }
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -101,7 +145,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 icon: Icons.logout,
                 title: "Logout",
                 color: Colors.red,
-                onTap: () {},
+                onTap: () => _showLogoutDialog(),
               ),
             ],
           ),

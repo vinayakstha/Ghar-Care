@@ -88,4 +88,8 @@ class UserSessionService {
   String? getUserPhoneNumber() {
     return _prefs.getString(_keyUserPhoneNumber);
   }
+
+  String? getUserProfilePicture() {
+    return _prefs.getString(_keyUserProfileImage);
+  }
 }

@@ -149,4 +149,21 @@ class AuthRepository implements IAuthRepository {
       return Left(ApiFailure(message: "No internet connection"));
     }
   }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserById(String id) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final user = await _authRemoteDataSource.getUserById(id);
+        if (user == null) {
+          return Left(ApiFailure(message: "User not found"));
+        }
+        return Right(user.toEntity());
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
+      }
+    } else {
+      return Left(ApiFailure(message: "No internet connection"));
+    }
+  }
 }

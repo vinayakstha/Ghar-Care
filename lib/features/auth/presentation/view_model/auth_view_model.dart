@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/features/auth/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/login_usercase.dart';
+import 'package:ghar_care/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/register_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/upload_image_usecase.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
@@ -13,13 +15,18 @@ final authViewModelProvider = NotifierProvider<AuthViewModel, AuthState>(
 class AuthViewModel extends Notifier<AuthState> {
   late final RegisterUsecase _registerUsecase;
   late final LoginUsecase _loginUsecase;
+  late final LogoutUsecase _logoutUsecase;
   late final UploadImageUsecase _uploadImageUsecase;
+  late final GetUserByIdUsecase _getUserByIdUsecase;
 
   @override
   AuthState build() {
     _registerUsecase = ref.read(registerUsecaseProvider);
     _loginUsecase = ref.read(loginUsecaseProvider);
+    _logoutUsecase = ref.read(logoutUsecaseProvider);
     _uploadImageUsecase = ref.read(uploadImageUsecaseProvider);
+    _getUserByIdUsecase = ref.read(getUserByIdUsecaseProvider);
+
     return AuthState();
   }
 
@@ -84,6 +91,52 @@ class AuthViewModel extends Notifier<AuthState> {
     );
   }
 
+  // Future<void> logout() async {
+  //   state = state.copyWith(status: AuthStatus.loading);
+
+  //   final result = await _logoutUsecase();
+
+  //   result.fold(
+  //     (failure) {
+  //       state = state.copyWith(
+  //         status: AuthStatus.error,
+  //         errorMessage: failure.message,
+  //       );
+  //     },
+  //     (isLoggedOut) {
+  //       if (isLoggedOut == true) {
+  //         state = state.copyWith(
+  //           status: AuthStatus.unauthenticated,
+  //           authEntity: null,
+  //           uploadPhotoName: null,
+  //         );
+  //       } else {
+  //         state = state.copyWith(
+  //           status: AuthStatus.error,
+  //           errorMessage: 'Logout failed',
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
+
+  Future<void> logout() async {
+    state = state.copyWith(status: AuthStatus.loading);
+
+    final result = await _logoutUsecase();
+
+    result.fold(
+      (failure) => state = state.copyWith(
+        status: AuthStatus.error,
+        errorMessage: failure.message,
+      ),
+      (success) => state = state.copyWith(
+        status: AuthStatus.unauthenticated,
+        authEntity: null,
+      ),
+    );
+  }
+
   //upload photo
   Future<void> uploadImage(File image) async {
     state = state.copyWith(status: AuthStatus.loading);
@@ -102,6 +155,26 @@ class AuthViewModel extends Notifier<AuthState> {
           status: AuthStatus.loaded,
           uploadPhotoName: imageName,
         );
+      },
+    );
+  }
+
+  Future<void> getUserById(String userId) async {
+    state = state.copyWith(status: AuthStatus.loading);
+
+    final result = await _getUserByIdUsecase(
+      GetUserByIdUsecaseParams(id: userId),
+    );
+
+    result.fold(
+      (failure) {
+        state = state.copyWith(
+          status: AuthStatus.error,
+          errorMessage: failure.message,
+        );
+      },
+      (user) {
+        state = state.copyWith(status: AuthStatus.loaded, authEntity: user);
       },
     );
   }
