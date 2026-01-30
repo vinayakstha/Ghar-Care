@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/login_usecase.dart';
 import 'package:ghar_care/features/auth/domain/usecases/logout_usecase.dart';
@@ -18,6 +19,7 @@ class AuthViewModel extends Notifier<AuthState> {
   late final LogoutUsecase _logoutUsecase;
   late final UploadImageUsecase _uploadImageUsecase;
   late final GetUserByIdUsecase _getUserByIdUsecase;
+  late final GetCurrentUserUsecase _getCurrentUserUsecase;
 
   @override
   AuthState build() {
@@ -26,7 +28,7 @@ class AuthViewModel extends Notifier<AuthState> {
     _logoutUsecase = ref.read(logoutUsecaseProvider);
     _uploadImageUsecase = ref.read(uploadImageUsecaseProvider);
     _getUserByIdUsecase = ref.read(getUserByIdUsecaseProvider);
-
+    _getCurrentUserUsecase = ref.read(getCurrentUserUsecaseProvider);
     return AuthState();
   }
 
@@ -91,35 +93,6 @@ class AuthViewModel extends Notifier<AuthState> {
     );
   }
 
-  // Future<void> logout() async {
-  //   state = state.copyWith(status: AuthStatus.loading);
-
-  //   final result = await _logoutUsecase();
-
-  //   result.fold(
-  //     (failure) {
-  //       state = state.copyWith(
-  //         status: AuthStatus.error,
-  //         errorMessage: failure.message,
-  //       );
-  //     },
-  //     (isLoggedOut) {
-  //       if (isLoggedOut == true) {
-  //         state = state.copyWith(
-  //           status: AuthStatus.unauthenticated,
-  //           authEntity: null,
-  //           uploadPhotoName: null,
-  //         );
-  //       } else {
-  //         state = state.copyWith(
-  //           status: AuthStatus.error,
-  //           errorMessage: 'Logout failed',
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
-
   Future<void> logout() async {
     state = state.copyWith(status: AuthStatus.loading);
 
@@ -134,6 +107,20 @@ class AuthViewModel extends Notifier<AuthState> {
         status: AuthStatus.unauthenticated,
         authEntity: null,
       ),
+    );
+  }
+
+  Future<void> getCurrentUser() async {
+    state = state.copyWith(status: AuthStatus.loading);
+    final result = await _getCurrentUserUsecase();
+
+    result.fold(
+      (failure) => state = state.copyWith(
+        status: AuthStatus.error,
+        errorMessage: failure.message,
+      ),
+      (user) =>
+          state = state.copyWith(status: AuthStatus.loaded, authEntity: user),
     );
   }
 

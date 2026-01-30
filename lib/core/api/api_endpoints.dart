@@ -39,4 +39,5 @@ class ApiEndpoints {
   static const String login = '/auth/login';
   static const String updateProfile = '/user/update-profile';
   static const String getUserById = '/user/';
+  static const String getCurrentUser = '/user/me';
 }
