@@ -40,4 +40,15 @@ class ApiEndpoints {
   static const String updateProfile = '/user/update-profile';
   static const String getUserById = '/user/';
   static const String getCurrentUser = '/user/me';
+
+  static String getImageUrl(String? imagePath) {
+    if (imagePath == null || imagePath.isEmpty) {
+      return '';
+    }
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    // Adjust the path based on your backend setup
+    return '${baseUrl.replaceAll('/api', '')}/uploads/$imagePath';
+  }
 }
