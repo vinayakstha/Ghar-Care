@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,15 +40,28 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<Either<Failure, AuthEntity>> getCurrentUser() async {
-    try {
-      final user = await _authLocalDataSource.getCurrentUser();
-      if (user != null) {
-        final entity = user.toEntity();
-        return Right(entity);
+    if (await _networkInfo.isConnected) {
+      try {
+        final user = await _authRemoteDataSource.getCurrentUser();
+        if (user != null) {
+          final entity = user.toEntity();
+          return Right(entity);
+        }
+        return (Left(ApiFailure(message: "No current user found")));
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
       }
-      return (Left(LocalDatabaseFailure(message: 'No current user found')));
-    } catch (e) {
-      return Left(LocalDatabaseFailure(message: e.toString()));
+    } else {
+      try {
+        final user = await _authLocalDataSource.getCurrentUser();
+        if (user != null) {
+          final entity = user.toEntity();
+          return Right(entity);
+        }
+        return (Left(LocalDatabaseFailure(message: 'No current user found')));
+      } catch (e) {
+        return Left(LocalDatabaseFailure(message: e.toString()));
+      }
     }
   }
 
@@ -130,6 +145,38 @@ class AuthRepository implements IAuthRepository {
       } catch (e) {
         return Left(LocalDatabaseFailure(message: e.toString()));
       }
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadImage(File image) async {
+    //only store in remote
+    if (await _networkInfo.isConnected) {
+      try {
+        final fileName = await _authRemoteDataSource.uploadImage(image);
+        return Right(fileName);
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
+      }
+    } else {
+      return Left(ApiFailure(message: "No internet connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserById(String id) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final user = await _authRemoteDataSource.getUserById(id);
+        if (user == null) {
+          return Left(ApiFailure(message: "User not found"));
+        }
+        return Right(user.toEntity());
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
+      }
+    } else {
+      return Left(ApiFailure(message: "No internet connection"));
     }
   }
 }

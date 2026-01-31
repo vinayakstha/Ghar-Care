@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // commented out - using SharedPreferences instead
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -122,6 +123,20 @@ class ApiClient {
   }
 
   // Multipart request for file uploads
+  Future<Response> updateFile(
+    String path, {
+    required FormData formData,
+    Options? options,
+    ProgressCallback? onSendProgress,
+  }) async {
+    return _dio.put(
+      path,
+      data: formData,
+      options: options,
+      onSendProgress: onSendProgress,
+    );
+  }
+
   Future<Response> uploadFile(
     String path, {
     required FormData formData,
@@ -139,7 +154,7 @@ class ApiClient {
 
 // Auth Interceptor to add JWT token to requests
 class _AuthInterceptor extends Interceptor {
-  final _storage = const FlutterSecureStorage();
+  // final _storage = const FlutterSecureStorage(); // commented out - use SharedPreferences
   static const String _tokenKey = 'auth_token';
 
   @override
@@ -159,7 +174,10 @@ class _AuthInterceptor extends Interceptor {
         options.path == ApiEndpoints.login;
 
     if (!isPublicGet && !isAuthEndpoint) {
-      final token = await _storage.read(key: _tokenKey);
+      // Read token from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(_tokenKey);
+      // final token = await _storage.read(key: _tokenKey); // commented out
       if (token != null) {
         options.headers['Authorization'] = 'Bearer $token';
       }
@@ -173,7 +191,8 @@ class _AuthInterceptor extends Interceptor {
     // Handle 401 Unauthorized - token expired
     if (err.response?.statusCode == 401) {
       // Clear token and redirect to login
-      _storage.delete(key: _tokenKey);
+      // _storage.delete(key: _tokenKey); // commented out
+      SharedPreferences.getInstance().then((prefs) => prefs.remove(_tokenKey));
       // You can add navigation logic here or use a callback
     }
     handler.next(err);

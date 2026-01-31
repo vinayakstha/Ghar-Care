@@ -5,19 +5,18 @@ import 'package:ghar_care/core/usecase/app_usecase.dart';
 import 'package:ghar_care/features/auth/data/repositories/auth_repository.dart';
 import 'package:ghar_care/features/auth/domain/repositories/auth_repository.dart';
 
-final logoutUsecaseProvider = Provider<LogoutUsecase>((ref) {
+final getCurrentUserUsecaseProvider = Provider<GetCurrentUserUsecase>((ref) {
   final authRepository = ref.read(authRepositoryProvider);
-  return LogoutUsecase(authRepository: authRepository);
+  return GetCurrentUserUsecase(authRepository: authRepository);
 });
 
-class LogoutUsecase implements UsecaseWithoutParams {
+class GetCurrentUserUsecase implements UsecaseWithoutParams {
   final IAuthRepository _authRepository;
-
-  LogoutUsecase({required IAuthRepository authRepository})
+  GetCurrentUserUsecase({required IAuthRepository authRepository})
     : _authRepository = authRepository;
 
   @override
   Future<Either<Failure, dynamic>> call() {
-    return _authRepository.logout();
+    return _authRepository.getCurrentUser();
   }
 }

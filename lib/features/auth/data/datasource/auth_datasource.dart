@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ghar_care/features/auth/data/models/auth_api_model.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 
@@ -13,4 +15,6 @@ abstract interface class IAuthRemoteDataSource {
   Future<AuthApiModel> register(AuthApiModel user);
   Future<AuthApiModel?> login(String email, String password);
   Future<AuthApiModel?> getUserById(String authId);
+  Future<AuthApiModel?> getCurrentUser();
+  Future<String> uploadImage(File image);
 }
