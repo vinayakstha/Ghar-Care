@@ -137,11 +137,12 @@ class AuthViewModel extends Notifier<AuthState> {
           errorMessage: failure.message,
         );
       },
-      (imageName) {
+      (imageName) async {
         state = state.copyWith(
           status: AuthStatus.loaded,
           uploadPhotoName: imageName,
         );
+        await getCurrentUser();
       },
     );
   }

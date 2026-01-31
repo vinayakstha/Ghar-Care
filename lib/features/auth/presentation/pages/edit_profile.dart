@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghar_care/core/services/storage/user_session_service.dart';
+import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
@@ -25,14 +25,17 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final _usernameController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  final List<XFile> _selectedMedia = [];
+  final ImagePicker _imagePicker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
-    final session = ref.read(userSessionServiceProvider);
-    _firstNameController.text = session.getUserFirstName() ?? "";
-    _lastNameController.text = session.getUserLastName() ?? "";
-    _usernameController.text = session.getUsername() ?? "";
-    _phoneController.text = session.getUserPhoneNumber() ?? "";
+
+    // Fetch current user on init
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(authViewModelProvider.notifier).getCurrentUser();
+    });
   }
 
   @override
@@ -43,9 +46,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _phoneController.dispose();
     super.dispose();
   }
-
-  final List<XFile> _selectedMedia = [];
-  final ImagePicker _imagePicker = ImagePicker();
 
   Future<bool> _askPermission(Permission permission) async {
     final status = await permission.status;
@@ -69,10 +69,22 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Give Permission"),
+        title: const Text("Give Permission"),
+        content: const Text(
+          "This feature requires permission to access your camera or gallery. Please enable it in your device settings.",
+        ),
         actions: [
-          TextButton(onPressed: () {}, child: Text("Cancle")),
-          TextButton(onPressed: () {}, child: Text("Open Settings")),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              openAppSettings();
+            },
+            child: const Text("Open Settings"),
+          ),
         ],
       ),
     );
@@ -135,7 +147,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         }
       }
     } catch (e) {
-      debugPrint("Gallery error");
+      debugPrint("Gallery error: $e");
 
       if (mounted) {
         SnackbarUtils.showError(context, "Gallery access denied");
@@ -148,8 +160,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.vertical(top: Radius.circular(20)),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) => SafeArea(
         child: Padding(
@@ -158,17 +170,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.camera_alt),
-                title: Text("Take Photo"),
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Take Photo"),
                 onTap: () {
                   Navigator.pop(context);
                   _pickFromCamera();
                 },
               ),
-
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text("Select From Gallery"),
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Select From Gallery"),
                 onTap: () {
                   Navigator.pop(context);
                   _pickFromGallery();
@@ -183,9 +194,27 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final initial = _usernameController.text.isNotEmpty
-        ? _usernameController.text[0].toUpperCase()
-        : "?";
+    final authState = ref.watch(authViewModelProvider);
+    final user = authState.authEntity;
+
+    final imageVersion =
+        authState.uploadPhotoName ??
+        user?.profilePicture ??
+        DateTime.now().millisecondsSinceEpoch.toString();
+
+    final profileImageUrl = user?.profilePicture != null
+        ? '${ApiEndpoints.baseUrl.replaceAll('/api', '')}${user!.profilePicture}?v=$imageVersion'
+        : null;
+
+    // Populate fields when user data is loaded
+    if (user != null && _firstNameController.text.isEmpty) {
+      _firstNameController.text = user.firstName;
+      _lastNameController.text = user.lastName;
+      _usernameController.text = user.username;
+      _phoneController.text = user.phoneNumber;
+    }
+
+    final initial = (user?.username ?? "?")[0].toUpperCase();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -209,19 +238,29 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   CircleAvatar(
                     radius: 65,
                     backgroundColor: const Color(0xFF006BAA),
+                    // Priority: 1. Local selection 2. Network image 3. null
                     backgroundImage: _selectedMedia.isNotEmpty
                         ? FileImage(File(_selectedMedia[0].path))
-                        : null,
-                    child: _selectedMedia.isNotEmpty
-                        ? null
-                        : Text(
+                        : (user?.profilePicture != null
+                                  ? NetworkImage(
+                                      // '${ApiEndpoints.baseUrl.replaceAll('/api', '')}${user!.profilePicture!}'
+                                      profileImageUrl!,
+                                    )
+                                  : null)
+                              as ImageProvider?,
+                    child:
+                        (_selectedMedia.isEmpty &&
+                            (user?.profilePicture == null ||
+                                user!.profilePicture!.isEmpty))
+                        ? Text(
                             initial,
                             style: const TextStyle(
                               fontSize: 38,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
-                          ),
+                          )
+                        : null,
                   ),
                   InkWell(
                     onTap: () {
@@ -233,7 +272,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       child: Icon(
                         Icons.edit,
                         size: 18,
-                        color: const Color(0xFF006BAA),
+                        color: Color(0xFF006BAA),
                       ),
                     ),
                   ),
