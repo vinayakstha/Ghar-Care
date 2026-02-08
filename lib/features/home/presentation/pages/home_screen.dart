@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ghar_care/features/dashboard/presentation/widgets/category_card.dart';
-import 'package:ghar_care/features/dashboard/presentation/widgets/home_header.dart';
+import 'package:ghar_care/features/home/presentation/widgets/home_header.dart';
 import 'package:ghar_care/features/dashboard/presentation/widgets/offer_card.dart';
 import 'package:ghar_care/features/dashboard/presentation/widgets/upcoming_booking_card.dart';
 
@@ -52,19 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SizedBox(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 190,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: promo.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 9),
-                            child: promo[index],
-                          );
-                        },
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: 190,
+                    //   child: ListView.builder(
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemCount: promo.length,
+                    //     itemBuilder: (context, index) {
+                    //       return Padding(
+                    //         padding: const EdgeInsets.only(right: 9),
+                    //         child: promo[index],
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: Row(
