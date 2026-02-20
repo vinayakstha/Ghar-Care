@@ -41,6 +41,9 @@ class ApiEndpoints {
   static const String getUserById = '/user/';
   static const String getCurrentUser = '/user/me';
 
+  static const String getAllCategories = '/category/';
+  static const String getCategoryById = '/category/';
+
   static String getImageUrl(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
       return '';
