@@ -36,7 +36,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // 🔹 Categories Title
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Row(
@@ -57,14 +56,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
 
-                  // 🔹 Loading State
                   if (categoryState.status == CategoryStatus.loading)
                     const Padding(
                       padding: EdgeInsets.all(20),
                       child: CircularProgressIndicator(),
                     ),
 
-                  // 🔹 Error State
                   if (categoryState.status == CategoryStatus.error)
                     Padding(
                       padding: const EdgeInsets.all(20),
@@ -74,7 +71,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
 
-                  // 🔹 Loaded State
                   if (categoryState.status == CategoryStatus.loaded)
                     GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -95,6 +91,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           imagePath:
                               'http://192.168.18.3:5050${category.categoryImage}',
                           category: category.categoryName,
+                          categoryId: category.categoryId ?? '',
                         );
                       },
                     ),

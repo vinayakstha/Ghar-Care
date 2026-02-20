@@ -33,7 +33,7 @@ class CategoryRepository implements ICategoryRepository {
       try {
         final categories = await _categoryRemoteDataSource.getAllCategories();
 
-        if (categories == null || categories.isEmpty) {
+        if (categories.isEmpty) {
           return Left(ApiFailure(message: "No categories found"));
         }
 
