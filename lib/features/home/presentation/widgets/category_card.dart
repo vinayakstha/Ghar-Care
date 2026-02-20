@@ -17,11 +17,12 @@ class CategoryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(imagePath, height: 60, fit: BoxFit.contain),
-          SizedBox(height: 8),
+          // Use Image.network instead of Image.asset
+          Image.network(imagePath, height: 60, fit: BoxFit.contain),
+          const SizedBox(height: 8),
           Text(
             category,
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
           ),
         ],
       ),
