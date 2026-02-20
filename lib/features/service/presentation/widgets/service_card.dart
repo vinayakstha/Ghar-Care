@@ -19,7 +19,7 @@ class ServiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onCardTap, // Entire card is tappable
+      onTap: onCardTap,
       borderRadius: BorderRadius.circular(12),
       child: Card(
         clipBehavior: Clip.hardEdge,
@@ -27,7 +27,6 @@ class ServiceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔹 Image with favorite button
             Stack(
               children: [
                 SizedBox(
@@ -50,7 +49,7 @@ class ServiceCard extends StatelessWidget {
                   top: 8,
                   right: 8,
                   child: GestureDetector(
-                    onTap: onFavorite, // Favorite button is separate
+                    onTap: onFavorite,
                     child: const CircleAvatar(
                       radius: 16,
                       backgroundColor: Colors.white70,
@@ -67,7 +66,6 @@ class ServiceCard extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            // 🔹 Service Name
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
@@ -83,7 +81,6 @@ class ServiceCard extends StatelessWidget {
 
             const SizedBox(height: 4),
 
-            // 🔹 Price
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
