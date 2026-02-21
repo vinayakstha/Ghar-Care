@@ -74,16 +74,12 @@ class _ServiceScreenState extends ConsumerState<ServiceScreen> {
                         .read(serviceViewModelProvider.notifier)
                         .selectService(service);
 
-                    // Navigate to BookingScreen
+                    // Navigate to BookingScreen - only pass serviceId
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => BookingScreen(
                           serviceId: service.serviceId ?? "", // or service._id
-                          serviceName: service.serviceName,
-                          price: service.price.toString(),
-                          imageUrl:
-                              "http://192.168.18.3:5050${service.serviceImage}",
                         ),
                       ),
                     );
