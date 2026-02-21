@@ -50,4 +50,21 @@ class ServiceRepository implements IServiceRepository {
       return Left(ApiFailure(message: "No internet connected"));
     }
   }
+
+  @override
+  Future<Either<Failure, ServiceEntity>> getServiceById(String id) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final service = await _serviceRemoteDataSource.getServiceById(id);
+        if (service == null) {
+          return Left(ApiFailure(message: "service not found"));
+        }
+        return Right(service.toEntity());
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
+      }
+    } else {
+      return Left(ApiFailure(message: "No internet connected"));
+    }
+  }
 }

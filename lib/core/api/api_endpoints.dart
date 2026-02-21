@@ -50,6 +50,10 @@ class ApiEndpoints {
     return '/service/category/$categoryId';
   }
 
+  static String getServiceById(String serviceId) {
+    return '/service/$serviceId';
+  }
+
   static String getImageUrl(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
       return '';

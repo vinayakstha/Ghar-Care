@@ -28,4 +28,15 @@ class ServiceRemoteDatasource implements IServiceRemoteDataSource {
         .map((json) => ServiceApiModel.fromJson(json as Map<String, dynamic>))
         .toList();
   }
+
+  @override
+  Future<ServiceApiModel?> getServiceById(String serviceId) async {
+    final response = await _apiClient.get(
+      ApiEndpoints.getServiceById(serviceId),
+    );
+    if (response.data == null) return null;
+
+    final Map<String, dynamic> data = response.data as Map<String, dynamic>;
+    return ServiceApiModel.fromJson(data);
+  }
 }

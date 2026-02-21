@@ -8,6 +8,7 @@ class ServiceApiModel {
   @JsonKey(name: "_id")
   final String? id;
   final String serviceName;
+  final String serviceImage;
   final String serviceDescription;
   final String categoryId;
   final String price;
@@ -15,6 +16,7 @@ class ServiceApiModel {
   ServiceApiModel({
     this.id,
     required this.serviceName,
+    required this.serviceImage,
     required this.serviceDescription,
     required this.categoryId,
     required this.price,
@@ -29,6 +31,7 @@ class ServiceApiModel {
     return ServiceEntity(
       serviceId: id,
       serviceName: serviceName,
+      serviceImage: serviceImage,
       serviceDescription: serviceDescription,
       categoryId: categoryId,
       price: price,
@@ -38,6 +41,7 @@ class ServiceApiModel {
   factory ServiceApiModel.fromEntity(ServiceEntity entity) {
     return ServiceApiModel(
       serviceName: entity.serviceName,
+      serviceImage: entity.serviceImage,
       serviceDescription: entity.serviceDescription,
       categoryId: entity.categoryId,
       price: entity.price,

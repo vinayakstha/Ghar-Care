@@ -1,8 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/error/failures.dart';
 import 'package:ghar_care/core/usecase/app_usecase.dart';
+import 'package:ghar_care/features/service/data/repository/service_repository.dart';
 import 'package:ghar_care/features/service/domain/repository/service_repository.dart';
+
+final getServicesByCategoryUsecaseProvider =
+    Provider<GetServicesByCategoryUsecase>((ref) {
+      final serviceRepository = ref.read(serviceRepositoryProvider);
+      return GetServicesByCategoryUsecase(serviceRepository: serviceRepository);
+    });
 
 class GetServicesByCategoryUsecaseParams extends Equatable {
   final String id;

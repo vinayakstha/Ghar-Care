@@ -19,7 +19,7 @@ class CategoryViewModel extends Notifier<CategoryState> {
     return const CategoryState();
   }
 
-  // 🔹 Get All Categories
+  // Get All Categories
   Future<void> getAllCategories() async {
     state = state.copyWith(status: CategoryStatus.loading);
 
@@ -41,7 +41,7 @@ class CategoryViewModel extends Notifier<CategoryState> {
     );
   }
 
-  // 🔹 Get Category By Id
+  //Get Category By Id
   Future<void> getCategoryById(String categoryId) async {
     state = state.copyWith(status: CategoryStatus.loading);
 
