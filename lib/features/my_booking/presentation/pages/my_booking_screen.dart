@@ -48,7 +48,6 @@ class _MyBookingScreenState extends ConsumerState<MyBookingScreen> {
                 return MyBookingCard(
                   booking: booking,
                   onTap: () {
-                    // Optional: select booking in ViewModel
                     ref
                         .read(myBookingViewModelProvider.notifier)
                         .selectBooking(booking);

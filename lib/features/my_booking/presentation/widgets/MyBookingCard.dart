@@ -178,7 +178,7 @@ class MyBookingCard extends StatelessWidget {
 
                         // Price
                         Text(
-                          'Price: \$${booking.price}',
+                          'Price: Rs.${booking.price}',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,

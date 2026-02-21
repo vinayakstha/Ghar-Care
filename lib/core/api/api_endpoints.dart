@@ -58,6 +58,14 @@ class ApiEndpoints {
   static String createBooking = '/booking/';
   static const String getBookingsByUser = '/booking/';
 
+  //========== Favourite Endpoints ==============
+  static String createFavourite = '/favourite/';
+  static String deleteFavourite(String favouriteId) {
+    return '/favourite/$favouriteId';
+  }
+
+  static const getFavouritesByUser = '/favourite/';
+
   static String getImageUrl(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
       return '';
