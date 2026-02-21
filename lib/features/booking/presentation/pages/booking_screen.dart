@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
+import 'package:ghar_care/core/utils/snackbar_utils.dart';
+import 'package:ghar_care/features/booking/presentation/state/booking_state.dart';
+import 'package:ghar_care/features/booking/presentation/view_model/booking_view_model.dart';
 import 'package:ghar_care/features/service/presentation/view_model/service_view_model.dart';
 
 class BookingScreen extends ConsumerStatefulWidget {
@@ -17,14 +20,18 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   String? selectedDate;
   String? selectedTime;
 
-  bool showFullDescription = false; // Track description toggle
+  bool showFullDescription = false;
 
   final List<String> timeSlots = [
-    "09:00 AM",
-    "11:00 AM",
-    "01:00 PM",
-    "03:00 PM",
-    "05:00 PM",
+    "9:00AM - 10:00AM",
+    "10:00AM - 11:00AM",
+    "11:00AM - 12:00PM",
+    "12:00PM - 1:00PM",
+    "1:00PM - 2:00PM",
+    "2:00PM - 3:00PM",
+    "3:00PM - 4:00PM",
+    "4:00PM - 5:00PM",
+    "5:00PM - 6:00PM",
   ];
 
   Future<void> _pickDate() async {
@@ -45,13 +52,14 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   @override
   Widget build(BuildContext context) {
     final serviceState = ref.watch(serviceViewModelProvider);
+    final bookingState = ref.watch(bookingViewModelProvider);
+
     final service = serviceState.selectedService;
 
     if (service == null) {
       return const Scaffold(body: Center(child: Text("Service not selected")));
     }
 
-    // Determine description text to display
     final descriptionText =
         showFullDescription || service.serviceDescription.length <= 150
         ? service.serviceDescription
@@ -64,7 +72,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Service Image
+            /// Service Image
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.network(
@@ -76,26 +84,27 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Service Name
+            /// Service Name
             Text(
               service.serviceName,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
 
-            // Price
+            /// Price
             Text(
               "Rs. ${service.price}",
               style: const TextStyle(fontSize: 18, color: Colors.black54),
             ),
             const SizedBox(height: 16),
 
-            // Service Description with "See More"
+            /// Description
             Text(
               descriptionText,
               textAlign: TextAlign.justify,
               style: const TextStyle(fontSize: 15),
             ),
+
             if (service.serviceDescription.length > 150)
               GestureDetector(
                 onTap: () {
@@ -122,7 +131,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Location Field
+            /// Location
             TextField(
               controller: _locationController,
               decoration: InputDecoration(
@@ -135,7 +144,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ),
             const SizedBox(height: 16),
 
-            // Date Picker
+            /// Date Picker
             GestureDetector(
               onTap: _pickDate,
               child: Container(
@@ -171,7 +180,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ),
             const SizedBox(height: 16),
 
-            // Time Dropdown
+            /// Time Dropdown
             DropdownButtonFormField<String>(
               value: selectedTime,
               decoration: InputDecoration(
@@ -194,16 +203,54 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ),
             const SizedBox(height: 30),
 
-            // Book Now Button
-            MyButton(
-              text: "Book Now",
-              onPressed: () {
-                print("Book Now Clicked");
-                print(
-                  "Date: $selectedDate, Time: $selectedTime, Location: ${_locationController.text}",
-                );
-              },
-            ),
+            /// Book Now Button
+            bookingState.status == BookingStatus.loading
+                ? const Center(child: CircularProgressIndicator())
+                : MyButton(
+                    text: "Book Now",
+                    onPressed: () async {
+                      if (selectedDate == null || selectedTime == null) {
+                        SnackbarUtils.showWarning(
+                          context,
+                          "Please select date and time",
+                        );
+                        return;
+                      }
+
+                      if (_locationController.text.isEmpty) {
+                        SnackbarUtils.showWarning(
+                          context,
+                          "Please enter location",
+                        );
+                        return;
+                      }
+
+                      await ref
+                          .read(bookingViewModelProvider.notifier)
+                          .createBooking(
+                            serviceId: service.serviceId ?? "",
+                            bookingDate: selectedDate!,
+                            bookingTime: selectedTime!,
+                            price: service.price,
+                            location: _locationController.text,
+                          );
+
+                      final currentState = ref.read(bookingViewModelProvider);
+
+                      if (currentState.status == BookingStatus.loaded) {
+                        SnackbarUtils.showSuccess(
+                          context,
+                          "Booking successful!",
+                        );
+                        Navigator.pop(context);
+                      } else if (currentState.status == BookingStatus.error) {
+                        SnackbarUtils.showError(
+                          context,
+                          currentState.errorMessage ?? "Booking failed",
+                        );
+                      }
+                    },
+                  ),
           ],
         ),
       ),

@@ -54,6 +54,10 @@ class ApiEndpoints {
     return '/service/$serviceId';
   }
 
+  //=========== Booking Endpoints ==============
+  static String createBooking = '/booking/';
+  static const String getBookingsByUser = '/booking/';
+
   static String getImageUrl(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
       return '';
