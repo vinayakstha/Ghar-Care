@@ -12,7 +12,7 @@ ServiceApiModel _$ServiceApiModelFromJson(Map<String, dynamic> json) =>
       serviceName: json['serviceName'] as String,
       serviceImage: json['serviceImage'] as String,
       serviceDescription: json['serviceDescription'] as String,
-      categoryId: json['categoryId']['_id'] as String,
+      categoryId: json['categoryId'] as String,
       price: json['price'] as String,
     );
 
