@@ -231,7 +231,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         : profileImage != null
                         ? ClipOval(
                             child: Image.network(
-                              "http://192.168.18.3:5050/uploads/$profileImage",
+                              "http://192.168.18.3:5050$profileImage",
                               width: 130,
                               height: 130,
                               fit: BoxFit.cover,
@@ -301,6 +301,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 title: "Edit Profile",
                 onTap: () {
                   AppRoutes.push(context, const EditProfileScreen());
+                  print(profileImage);
                 },
               ),
 

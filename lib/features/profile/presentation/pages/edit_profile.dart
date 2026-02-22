@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/services/storage/user_session_service.dart';
@@ -155,12 +153,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         final session = ref.read(userSessionServiceProvider);
                         if (state.user != null) {
                           await session.saveUserSession(
-                            userId: state.user!.userId ?? '',
-                            email: state.user!.email ?? '',
-                            username: state.user!.username ?? '',
-                            firstName: state.user!.firstName ?? '',
-                            lastName: state.user!.lastName ?? '',
-                            phoneNumber: state.user!.phoneNumber ?? '',
+                            userId: state.user!.userId,
+                            email: state.user!.email,
+                            username: state.user!.username,
+                            firstName: state.user!.firstName,
+                            lastName: state.user!.lastName,
+                            phoneNumber: state.user!.phoneNumber,
                             profilePicture: state.user!.profilePicture,
                           );
                         }
@@ -173,11 +171,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
                         // Refresh form fields with updated data
                         if (state.user != null) {
-                          _usernameController.text = state.user!.username ?? "";
-                          _firstNameController.text =
-                              state.user!.firstName ?? "";
-                          _lastNameController.text = state.user!.lastName ?? "";
-                          _phoneController.text = state.user!.phoneNumber ?? "";
+                          _usernameController.text = state.user!.username;
+                          _firstNameController.text = state.user!.firstName;
+                          _lastNameController.text = state.user!.lastName;
+                          _phoneController.text = state.user!.phoneNumber;
                         }
                       } else if (state.status == UserStatus.error) {
                         SnackbarUtils.showError(
