@@ -134,61 +134,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 const SizedBox(height: 10),
 
-                // Forgot Password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-
+                // // Forgot Password
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: TextButton(
+                //     onPressed: () {},
+                //     child: const Text(
+                //       "Forgot Password?",
+                //       style: TextStyle(fontWeight: FontWeight.w600),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 20),
 
                 // Login Button
                 MyButton(text: "Login", onPressed: _handleLogin),
-
-                const SizedBox(height: 30),
-
-                // OR Divider
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: Colors.grey.shade400)),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text("Or Login With Google"),
-                    ),
-                    Expanded(child: Divider(color: Colors.grey.shade400)),
-                  ],
-                ),
-
-                const SizedBox(height: 20),
-
-                Center(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Image.asset(
-                        "assets/icons/google.png",
-                        height: 28,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(
-                              Icons.g_mobiledata,
-                              size: 28,
-                              color: Colors.blue,
-                            ),
-                      ),
-                    ),
-                  ),
-                ),
 
                 const SizedBox(height: 30),
 

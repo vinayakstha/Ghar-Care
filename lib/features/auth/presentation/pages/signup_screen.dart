@@ -240,35 +240,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
               const SizedBox(height: 25),
 
-              // OR Divider
-              Row(
-                children: [
-                  Expanded(child: Divider(color: Colors.grey.shade400)),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text("Or Sign Up With Google"),
-                  ),
-                  Expanded(child: Divider(color: Colors.grey.shade400)),
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              Center(
-                child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    child: Image.asset("assets/icons/google.png", height: 28),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 25),
-
               // Link to login screen
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -27,7 +27,11 @@ class _FavouriteScreenState extends ConsumerState<FavouriteScreen> {
     final favouriteState = ref.watch(favouriteViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("My Favourites")),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("My Favourites"),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Builder(

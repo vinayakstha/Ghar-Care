@@ -28,9 +28,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       imagePath: "assets/images/onboarding2.png",
     ),
     MyOnboarding(
-      title: "Secure & Easy Payments",
-      description: "Enjoy transparent pricing and make secure online payments.",
-      imagePath: "assets/images/onboarding3.png",
+      title: "7 Days a Week Service",
+      description:
+          "Reliable home services whenever you need them, no off days.",
+      imagePath: "assets/images/onboarding3.jpg",
     ),
   ];
 

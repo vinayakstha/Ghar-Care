@@ -26,7 +26,11 @@ class _MyBookingScreenState extends ConsumerState<MyBookingScreen> {
     final state = ref.watch(myBookingViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My Bookings'), centerTitle: true),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('My Bookings'),
+        centerTitle: true,
+      ),
       body: state.status == MyBookingStatus.loading
           ? const Center(child: CircularProgressIndicator())
           : state.status == MyBookingStatus.error
