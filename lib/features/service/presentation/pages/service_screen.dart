@@ -4,6 +4,8 @@ import 'package:ghar_care/features/service/presentation/view_model/service_view_
 import 'package:ghar_care/features/service/presentation/state/service_state.dart';
 import 'package:ghar_care/features/service/presentation/widgets/service_card.dart';
 import 'package:ghar_care/features/booking/presentation/pages/booking_screen.dart';
+import 'package:ghar_care/features/favourite/presentation/view_model/favourite_view_model.dart';
+import 'package:ghar_care/features/favourite/domain/entities/favourite_entity.dart';
 
 class ServiceScreen extends ConsumerStatefulWidget {
   final String categoryId;
@@ -28,12 +30,15 @@ class _ServiceScreenState extends ConsumerState<ServiceScreen> {
       ref
           .read(serviceViewModelProvider.notifier)
           .getServicesByCategory(widget.categoryId);
+
+      ref.read(favouriteViewModelProvider.notifier).getFavouritesByUser();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final serviceState = ref.watch(serviceViewModelProvider);
+    final favouriteState = ref.watch(favouriteViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.categoryName)),
@@ -64,28 +69,55 @@ class _ServiceScreenState extends ConsumerState<ServiceScreen> {
               itemBuilder: (context, index) {
                 final service = serviceState.services[index];
 
+                /// Check if this service is favourited
+                FavouriteEntity? favouriteItem;
+
+                try {
+                  favouriteItem = favouriteState.favourites.firstWhere(
+                    (fav) => fav.service.serviceId == service.serviceId,
+                  );
+                } catch (_) {
+                  favouriteItem = null;
+                }
+
+                final isFavourite = favouriteItem != null;
+
                 return ServiceCard(
                   imageUrl: "http://192.168.18.3:5050${service.serviceImage}",
                   serviceName: service.serviceName,
                   price: "Rs. ${service.price}",
+                  isFavourite: isFavourite,
+
+                  /// Navigate to booking
                   onCardTap: () {
-                    // Save selected service in state
                     ref
                         .read(serviceViewModelProvider.notifier)
                         .selectService(service);
 
-                    // Navigate to BookingScreen - only pass serviceId
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => BookingScreen(
-                          serviceId: service.serviceId ?? "", // or service._id
-                        ),
+                        builder: (_) =>
+                            BookingScreen(serviceId: service.serviceId ?? ""),
                       ),
                     );
                   },
-                  onFavorite: () {
-                    // Add favorite logic here
+
+                  /// Favourite Toggle Logic
+                  onFavorite: () async {
+                    final favouriteNotifier = ref.read(
+                      favouriteViewModelProvider.notifier,
+                    );
+
+                    if (isFavourite && favouriteItem != null) {
+                      await favouriteNotifier.deleteFavourite(
+                        favouriteId: favouriteItem.favouriteId ?? "",
+                      );
+                    } else {
+                      await favouriteNotifier.createFavourite(
+                        serviceId: service.serviceId ?? "",
+                      );
+                    }
                   },
                 );
               },

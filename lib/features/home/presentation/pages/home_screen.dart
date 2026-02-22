@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/features/home/presentation/widgets/category_card.dart';
 import 'package:ghar_care/features/home/presentation/view_model/category_view_model.dart';
 import 'package:ghar_care/features/home/presentation/widgets/home_header.dart';
-import 'package:ghar_care/features/dashboard/presentation/widgets/upcoming_booking_card.dart';
+import 'package:ghar_care/features/nav/presentation/widgets/upcoming_booking_card.dart';
 import 'package:ghar_care/features/home/presentation/state/category_state.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {

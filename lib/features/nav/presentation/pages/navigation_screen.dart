@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ghar_care/features/dashboard/presentation/pages/bottom_screens/favourite_screen.dart';
+import 'package:ghar_care/features/favourite/presentation/pages/favourite_screen.dart';
 import 'package:ghar_care/features/home/presentation/pages/home_screen.dart';
 import 'package:ghar_care/features/auth/presentation/pages/profile_screen.dart';
 import 'package:ghar_care/features/my_booking/presentation/pages/my_booking_screen.dart';

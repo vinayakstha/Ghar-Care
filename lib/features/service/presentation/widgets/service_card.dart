@@ -4,6 +4,7 @@ class ServiceCard extends StatelessWidget {
   final String imageUrl;
   final String serviceName;
   final String price;
+  final bool isFavourite;
   final VoidCallback onCardTap;
   final VoidCallback? onFavorite;
 
@@ -12,6 +13,7 @@ class ServiceCard extends StatelessWidget {
     required this.imageUrl,
     required this.serviceName,
     required this.price,
+    required this.isFavourite,
     required this.onCardTap,
     this.onFavorite,
   });
@@ -28,7 +30,7 @@ class ServiceCard extends StatelessWidget {
           height: 210,
           child: Stack(
             children: [
-              // Background Image
+              /// Background Image
               Positioned.fill(
                 child: Image.network(
                   imageUrl,
@@ -44,7 +46,7 @@ class ServiceCard extends StatelessWidget {
                 ),
               ),
 
-              // Dark Gradient Overlay
+              /// Gradient Overlay
               Positioned.fill(
                 child: Container(
                   decoration: const BoxDecoration(
@@ -57,17 +59,17 @@ class ServiceCard extends StatelessWidget {
                 ),
               ),
 
-              // Favorite Button
+              /// Favourite Button
               Positioned(
                 top: 12,
                 right: 12,
                 child: GestureDetector(
                   onTap: onFavorite,
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     radius: 18,
                     backgroundColor: Colors.white70,
                     child: Icon(
-                      Icons.favorite_border,
+                      isFavourite ? Icons.favorite : Icons.favorite_border,
                       color: Colors.red,
                       size: 20,
                     ),
@@ -75,7 +77,7 @@ class ServiceCard extends StatelessWidget {
                 ),
               ),
 
-              // Text Content
+              /// Text Content
               Positioned(
                 bottom: 12,
                 left: 12,
