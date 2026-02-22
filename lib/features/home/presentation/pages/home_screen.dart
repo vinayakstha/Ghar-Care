@@ -37,20 +37,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Categories",
+                          "Our Services",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text("View More"),
                         ),
                       ],
                     ),
@@ -98,7 +94,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                   const SizedBox(height: 10),
 
-                  const UpcomingBookingCard(),
+                  // const UpcomingBookingCard(),
                 ],
               ),
             ),
