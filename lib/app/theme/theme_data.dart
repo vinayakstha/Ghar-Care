@@ -1,12 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// ThemeData getApplicationTheme() {
-//   return ThemeData(
-//     fontFamily: "Inter Regular",
-//     scaffoldBackgroundColor: Colors.white,
-//   );
-// }
-
 import 'package:flutter/material.dart';
 import 'package:ghar_care/app/theme/app_colors.dart';
 
@@ -18,10 +9,8 @@ ThemeData getApplicationTheme() {
   return ThemeData(
     colorScheme: colorScheme,
     useMaterial3: true,
-    fontFamily: 'Poppins Regular',
+    fontFamily: 'Inter Regular',
 
-    // inputDecorationTheme: getInputDecorationTheme(),
-    // bottomNavigationBarTheme: getBottomNavigationTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
@@ -54,8 +43,6 @@ ThemeData getApplicationDarkTheme() {
     useMaterial3: true,
     fontFamily: "Inter Regular",
 
-    // inputDecorationTheme: getDarkInputDecorationTheme(),
-    // bottomNavigationBarTheme: getDarkBottomNavigationTheme(),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.darkSurface,
       foregroundColor: AppColors.darkTextPrimary,

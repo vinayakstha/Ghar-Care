@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghar_care/app/app.dart';
 import 'package:ghar_care/app/routes/app_routes.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
@@ -60,8 +59,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         }
       }
     });
-
-    final isDarkMode = MyApp.currentThemeMode == ThemeMode.dark;
 
     return Scaffold(
       body: SafeArea(

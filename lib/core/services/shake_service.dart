@@ -13,7 +13,7 @@ class ShakeService {
   bool _isListening = false;
 
   DateTime? _lastShakeTime;
-  static const double _shakeThreshold = 15.0;
+  static const double _shakeThreshold = 80.0;
   static const int _shakeCooldownMs = 1000;
   void startListening(void Function() onShakeDetected) {
     if (_isListening) return;

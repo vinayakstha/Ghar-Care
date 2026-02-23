@@ -21,7 +21,7 @@ class MyOnboarding extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 29,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
             fontFamily: "Inter Bold",
           ),
@@ -32,7 +32,7 @@ class MyOnboarding extends StatelessWidget {
           child: Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, color: Colors.grey),
+            style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
         ),
       ],
