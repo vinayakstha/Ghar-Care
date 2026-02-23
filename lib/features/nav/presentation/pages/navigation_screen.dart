@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:ghar_care/features/favourite/presentation/pages/favourite_screen.dart';
 import 'package:ghar_care/features/home/presentation/pages/home_screen.dart';
 import 'package:ghar_care/features/auth/presentation/pages/profile_screen.dart';
@@ -13,18 +15,46 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
+  late StreamSubscription<GyroscopeEvent> _gyroscopeSubscription;
 
-  List<Widget> lstBottomScreen = [
+  final List<Widget> lstBottomScreen = [
     const HomeScreen(),
     const MyBookingScreen(),
     const FavouriteScreen(),
     const ProfileScreen(),
   ];
 
+  // Threshold to detect significant tilt
+  final double tiltThreshold = 7.0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _gyroscopeSubscription = gyroscopeEvents.listen((GyroscopeEvent event) {
+      if (event.z > tiltThreshold) {
+        _nextPage();
+      }
+    });
+  }
+
+  void _nextPage() {
+    if (mounted) {
+      setState(() {
+        _selectedIndex = (_selectedIndex + 1) % lstBottomScreen.length;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _gyroscopeSubscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text("Dashboard")),
       body: lstBottomScreen[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -34,10 +64,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
             _selectedIndex = index;
           });
         },
-        selectedItemColor: Color(0xff006baa),
+        selectedItemColor: const Color(0xff006baa),
         iconSize: 30,
-
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ""),

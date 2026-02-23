@@ -41,14 +41,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Image.asset(
-            "assets/icons/logo.png",
-            width: 200,
-            fit: BoxFit.contain,
-          ),
+      body: Center(
+        child: Image.asset(
+          "assets/icons/logo.png",
+          width: 200,
+          fit: BoxFit.contain,
         ),
       ),
     );

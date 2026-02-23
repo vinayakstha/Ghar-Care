@@ -75,6 +75,7 @@ dependencies:
 
   #sensors
   sensors_plus: ^7.0.0
+  proximity_sensor: ^1.0.5
 
 dev_dependencies:
   flutter_test:
