@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghar_care/app/app.dart';
 import 'package:ghar_care/features/auth/presentation/pages/login_screen.dart';
 import 'package:ghar_care/features/onboarding/presentation/widgets/my_onboarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -63,8 +64,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = MyApp.currentThemeMode == ThemeMode.dark;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? Colors.black : Colors.white,
       body: Stack(
         children: [
           PageView.builder(

@@ -113,7 +113,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future<void> _pickMedia() async {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -201,7 +200,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -251,7 +249,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             initial,
                             style: const TextStyle(
                               fontSize: 40,
-                              color: Colors.white,
+
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -260,12 +258,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     onTap: _pickMedia,
                     child: const CircleAvatar(
                       radius: 18,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.edit,
-                        size: 18,
-                        color: Color(0xFF006BAA),
-                      ),
+                      backgroundColor: Color(0xFF006BAA),
+                      child: Icon(Icons.edit, size: 18, color: Colors.white),
                     ),
                   ),
                 ],
@@ -327,7 +321,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     required VoidCallback onTap,
   }) {
     return Card(
-      color: Colors.white,
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -338,11 +331,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             horizontal: 20,
             vertical: 6,
           ),
-          leading: Icon(icon, size: 26, color: color ?? Colors.black),
-          title: Text(
-            title,
-            style: TextStyle(fontSize: 17, color: color ?? Colors.black),
-          ),
+          leading: Icon(icon, size: 26, color: color),
+          title: Text(title, style: TextStyle(fontSize: 17, color: color)),
           trailing: const Icon(Icons.chevron_right),
           onTap: onTap,
         ),

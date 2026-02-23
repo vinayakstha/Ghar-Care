@@ -125,16 +125,9 @@ class MyBookingCard extends StatelessWidget {
                         // Date
                         Row(
                           children: [
-                            const Icon(
-                              Icons.calendar_today,
-                              size: 16,
-                              color: Colors.black54,
-                            ),
+                            const Icon(Icons.calendar_today, size: 16),
                             const SizedBox(width: 4),
-                            Text(
-                              booking.bookingDate,
-                              style: const TextStyle(color: Colors.black54),
-                            ),
+                            Text(booking.bookingDate),
                           ],
                         ),
                         const SizedBox(height: 4),
@@ -142,16 +135,9 @@ class MyBookingCard extends StatelessWidget {
                         // Time
                         Row(
                           children: [
-                            const Icon(
-                              Icons.access_time,
-                              size: 16,
-                              color: Colors.black54,
-                            ),
+                            const Icon(Icons.access_time, size: 16),
                             const SizedBox(width: 4),
-                            Text(
-                              booking.bookingTime,
-                              style: const TextStyle(color: Colors.black54),
-                            ),
+                            Text(booking.bookingTime),
                           ],
                         ),
                         const SizedBox(height: 4),
@@ -159,16 +145,12 @@ class MyBookingCard extends StatelessWidget {
                         // Location
                         Row(
                           children: [
-                            const Icon(
-                              Icons.location_on,
-                              size: 16,
-                              color: Colors.black54,
-                            ),
+                            const Icon(Icons.location_on, size: 16),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
                                 booking.location,
-                                style: const TextStyle(color: Colors.black54),
+
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

@@ -27,7 +27,6 @@ class CategoryCard extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +35,7 @@ class CategoryCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               category,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
             ),
           ],
         ),

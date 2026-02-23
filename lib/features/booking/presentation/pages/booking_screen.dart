@@ -93,10 +93,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             const SizedBox(height: 8),
 
             /// Price
-            Text(
-              "Rs. ${service.price}",
-              style: const TextStyle(fontSize: 18, color: Colors.black54),
-            ),
+            Text("Rs. ${service.price}", style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 16),
 
             /// Description
@@ -164,14 +161,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                       children: [
                         const Icon(Icons.calendar_today),
                         const SizedBox(width: 8),
-                        Text(
-                          selectedDate ?? "Select Date",
-                          style: TextStyle(
-                            color: selectedDate == null
-                                ? Colors.grey
-                                : Colors.black,
-                          ),
-                        ),
+                        Text(selectedDate ?? "Select Date"),
                       ],
                     ),
                     const Icon(Icons.arrow_drop_down),

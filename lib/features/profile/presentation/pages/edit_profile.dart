@@ -50,12 +50,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final userState = ref.watch(userViewModelProvider);
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("Edit Profile"),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: const Text("Edit Profile"), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
