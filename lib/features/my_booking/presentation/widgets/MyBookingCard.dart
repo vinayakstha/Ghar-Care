@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/features/my_booking/domain/entities/my_booking_entity.dart';
 
 class MyBookingCard extends StatelessWidget {
@@ -39,7 +40,7 @@ class MyBookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageUrl = booking.service.serviceImage.startsWith('http')
         ? booking.service.serviceImage
-        : 'http://192.168.18.3:5050${booking.service.serviceImage}';
+        : '${ApiEndpoints.imageBaseUrl}${booking.service.serviceImage}';
 
     return GestureDetector(
       onTap: onTap,

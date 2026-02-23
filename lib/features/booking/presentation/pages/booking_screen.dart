@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/booking/presentation/state/booking_state.dart';
@@ -76,7 +77,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.network(
-                "http://192.168.18.3:5050${service.serviceImage}",
+                "${ApiEndpoints.imageBaseUrl}${service.serviceImage}",
                 height: 170,
                 width: double.infinity,
                 fit: BoxFit.cover,

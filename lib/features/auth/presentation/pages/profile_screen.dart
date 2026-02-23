@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/app/routes/app_routes.dart';
+import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/features/profile/presentation/pages/edit_profile.dart';
 import 'package:ghar_care/features/auth/presentation/pages/login_screen.dart';
 import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
@@ -231,7 +232,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         : profileImage != null
                         ? ClipOval(
                             child: Image.network(
-                              "http://192.168.18.3:5050$profileImage",
+                              "${ApiEndpoints.imageBaseUrl}$profileImage",
                               width: 130,
                               height: 130,
                               fit: BoxFit.cover,

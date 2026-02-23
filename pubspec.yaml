@@ -73,6 +73,9 @@ dependencies:
   dartz: ^0.10.1
   permission_handler: ^12.0.1
 
+  #sensors
+  sensors_plus: ^7.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

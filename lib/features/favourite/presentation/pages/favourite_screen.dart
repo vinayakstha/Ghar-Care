@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/features/favourite/presentation/view_model/favourite_view_model.dart';
 import 'package:ghar_care/features/favourite/presentation/state/favourite_state.dart';
 import 'package:ghar_care/features/service/presentation/widgets/service_card.dart';
@@ -61,7 +62,8 @@ class _FavouriteScreenState extends ConsumerState<FavouriteScreen> {
                 final service = favourite.service;
 
                 return ServiceCard(
-                  imageUrl: "http://192.168.18.3:5050${service.serviceImage}",
+                  imageUrl:
+                      "${ApiEndpoints.imageBaseUrl}${service.serviceImage}",
                   serviceName: service.serviceName,
                   price: "Rs. ${service.price}",
                   isFavourite: true,

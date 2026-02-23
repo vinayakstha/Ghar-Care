@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/features/home/presentation/widgets/category_card.dart';
 import 'package:ghar_care/features/home/presentation/view_model/category_view_model.dart';
 import 'package:ghar_care/features/home/presentation/widgets/home_header.dart';
@@ -85,7 +86,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                         return CategoryCard(
                           imagePath:
-                              'http://192.168.18.3:5050${category.categoryImage}',
+                              // 'http://192.168.18.3:5050${category.categoryImage}',
+                              '${ApiEndpoints.imageBaseUrl}${category.categoryImage}',
                           category: category.categoryName,
                           categoryId: category.categoryId ?? '',
                         );

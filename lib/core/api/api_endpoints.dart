@@ -12,13 +12,15 @@ class ApiEndpoints {
   // For iOS Simulator use: 'http://localhost:5000/api/v1'
   // For Physical Device use your computer's IP: 'http://192.168.x.x:5000/api/v1'
 
-  static const bool isPhysicalDevice = false;
+  static const bool isPhysicalDevice = true;
 
-  static const String compIpAddress = "1111.333";
+  static const String compIpAddress = "172.26.0.170";
+
+  static const String imageBaseUrl = "http://$compIpAddress:5050";
 
   static String get baseUrl {
     if (isPhysicalDevice) {
-      return "http://$compIpAddress:3000/api";
+      return "http://$compIpAddress:5050/api";
     }
     if (kIsWeb) {
       return "http://localhost:3000/api";
