@@ -77,6 +77,12 @@ dependencies:
   sensors_plus: ^7.0.0
   proximity_sensor: ^1.0.5
 
+  #map
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  geocoding: ^2.1.1
+  http: ^1.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
