@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/error/failures.dart';
 import 'package:ghar_care/core/usecase/app_usecase.dart';
-import 'package:ghar_care/features/home/data/repository/category_repository.dart';
-import 'package:ghar_care/features/home/domain/repository/category_repository.dart';
+import 'package:ghar_care/features/category/data/repository/category_repository.dart';
+import 'package:ghar_care/features/category/domain/repository/category_repository.dart';
 
 final getAllCategoriesUsecaseProvider = Provider<GetAllCategoriesUsecase>((
   ref,

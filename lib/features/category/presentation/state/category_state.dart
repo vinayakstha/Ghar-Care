@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:ghar_care/features/home/domain/entities/category_entity.dart';
+import 'package:ghar_care/features/category/domain/entities/category_entity.dart';
 
 enum CategoryStatus { initial, loading, loaded, error }
 

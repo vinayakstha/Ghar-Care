@@ -3,7 +3,7 @@ import 'package:ghar_care/core/services/hive/hive_service.dart';
 import 'package:ghar_care/core/services/storage/user_session_service.dart';
 import 'package:ghar_care/features/auth/data/datasource/auth_datasource.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
-import 'package:ghar_care/features/home/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
 
 //provider
 final authLocalDatasourceProvider = Provider<AuthLocalDatasource>((ref) {

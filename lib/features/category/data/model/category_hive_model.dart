@@ -1,6 +1,6 @@
 import 'package:ghar_care/core/constants/hive_table_constant.dart';
-import 'package:ghar_care/features/home/data/model/category_api_model.dart';
-import 'package:ghar_care/features/home/domain/entities/category_entity.dart';
+import 'package:ghar_care/features/category/data/model/category_api_model.dart';
+import 'package:ghar_care/features/category/domain/entities/category_entity.dart';
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 

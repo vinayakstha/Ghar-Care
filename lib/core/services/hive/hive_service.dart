@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/constants/hive_table_constant.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
-import 'package:ghar_care/features/home/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 

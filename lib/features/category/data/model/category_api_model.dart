@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:ghar_care/features/home/domain/entities/category_entity.dart';
+import 'package:ghar_care/features/category/domain/entities/category_entity.dart';
 
 part 'category_api_model.g.dart';
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/api/api_endpoints.dart';
-import 'package:ghar_care/features/home/presentation/widgets/category_card.dart';
-import 'package:ghar_care/features/home/presentation/view_model/category_view_model.dart';
-import 'package:ghar_care/features/home/presentation/widgets/home_header.dart';
-import 'package:ghar_care/features/nav/presentation/widgets/upcoming_booking_card.dart';
-import 'package:ghar_care/features/home/presentation/state/category_state.dart';
+import 'package:ghar_care/features/category/presentation/widgets/category_card.dart';
+import 'package:ghar_care/features/category/presentation/view_model/category_view_model.dart';
+import 'package:ghar_care/features/category/presentation/widgets/home_header.dart';
+import 'package:ghar_care/features/category/presentation/state/category_state.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

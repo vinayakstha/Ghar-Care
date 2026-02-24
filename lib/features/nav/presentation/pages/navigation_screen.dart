@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:ghar_care/features/favourite/presentation/pages/favourite_screen.dart';
-import 'package:ghar_care/features/home/presentation/pages/home_screen.dart';
+import 'package:ghar_care/features/category/presentation/pages/home_screen.dart';
 import 'package:ghar_care/features/auth/presentation/pages/profile_screen.dart';
 import 'package:ghar_care/features/my_booking/presentation/pages/my_booking_screen.dart';
 

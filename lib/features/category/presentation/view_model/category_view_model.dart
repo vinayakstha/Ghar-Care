@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ghar_care/features/home/domain/usecases/get_all_categories_usecase.dart';
-import 'package:ghar_care/features/home/domain/usecases/get_category_by_id_usecase.dart';
-import 'package:ghar_care/features/home/presentation/state/category_state.dart';
+import 'package:ghar_care/features/category/domain/usecases/get_all_categories_usecase.dart';
+import 'package:ghar_care/features/category/domain/usecases/get_category_by_id_usecase.dart';
+import 'package:ghar_care/features/category/presentation/state/category_state.dart';
 
 final categoryViewModelProvider =
     NotifierProvider<CategoryViewModel, CategoryState>(

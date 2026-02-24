@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/services/hive/hive_service.dart';
-import 'package:ghar_care/features/home/data/datasource/category_datasource.dart';
-import 'package:ghar_care/features/home/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/category/data/datasource/category_datasource.dart';
+import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
 
 // Provider
 final categoryLocalDatasourceProvider = Provider<CategoryLocalDatasource>((

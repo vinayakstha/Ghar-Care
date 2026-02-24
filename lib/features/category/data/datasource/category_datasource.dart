@@ -1,5 +1,5 @@
-import 'package:ghar_care/features/home/data/model/category_api_model.dart';
-import 'package:ghar_care/features/home/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/category/data/model/category_api_model.dart';
+import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
 
 abstract interface class ICategoryRemoteDataSource {
   Future<CategoryApiModel?> getCategoryById(String categoryId);

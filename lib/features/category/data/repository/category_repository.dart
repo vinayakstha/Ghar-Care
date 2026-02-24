@@ -2,13 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/error/failures.dart';
 import 'package:ghar_care/core/services/connectivity/network_info.dart';
-import 'package:ghar_care/features/home/data/datasource/category_datasource.dart';
-import 'package:ghar_care/features/home/data/datasource/local/category_local_datasource.dart';
-import 'package:ghar_care/features/home/data/datasource/remote/category_remote_datasource.dart';
-import 'package:ghar_care/features/home/data/model/category_api_model.dart';
-import 'package:ghar_care/features/home/data/model/category_hive_model.dart';
-import 'package:ghar_care/features/home/domain/entities/category_entity.dart';
-import 'package:ghar_care/features/home/domain/repository/category_repository.dart';
+import 'package:ghar_care/features/category/data/datasource/category_datasource.dart';
+import 'package:ghar_care/features/category/data/datasource/local/category_local_datasource.dart';
+import 'package:ghar_care/features/category/data/datasource/remote/category_remote_datasource.dart';
+import 'package:ghar_care/features/category/data/model/category_api_model.dart';
+import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/category/domain/entities/category_entity.dart';
+import 'package:ghar_care/features/category/domain/repository/category_repository.dart';
 
 final categoryRepositoryProvider = Provider<ICategoryRepository>((ref) {
   final categoryRemoteDataSource = ref.read(categoryRemoteDataSourceProvider);

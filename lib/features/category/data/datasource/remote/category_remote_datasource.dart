@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/api/api_client.dart';
 import 'package:ghar_care/core/api/api_endpoints.dart';
 import 'package:ghar_care/core/services/storage/token_service.dart';
-import 'package:ghar_care/features/home/data/model/category_api_model.dart';
-import 'package:ghar_care/features/home/data/datasource/category_datasource.dart';
+import 'package:ghar_care/features/category/data/model/category_api_model.dart';
+import 'package:ghar_care/features/category/data/datasource/category_datasource.dart';
 
 final categoryRemoteDataSourceProvider = Provider<ICategoryRemoteDataSource>((
   ref,
