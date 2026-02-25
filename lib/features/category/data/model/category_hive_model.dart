@@ -25,6 +25,7 @@ class CategoryHiveModel extends HiveObject {
 
   CategoryEntity toEntity() {
     return CategoryEntity(
+      categoryId: categoryId,
       categoryName: categoryName,
       categoryImage: categoryImage,
     );

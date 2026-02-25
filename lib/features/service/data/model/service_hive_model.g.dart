@@ -21,7 +21,7 @@ class ServiceHiveModelAdapter extends TypeAdapter<ServiceHiveModel> {
       serviceName: fields[1] as String,
       serviceImage: fields[2] as String,
       serviceDescription: fields[3] as String,
-      categoyId: fields[4] as String,
+      categoryId: fields[4] as String,
       price: fields[5] as String,
     );
   }
@@ -39,7 +39,7 @@ class ServiceHiveModelAdapter extends TypeAdapter<ServiceHiveModel> {
       ..writeByte(3)
       ..write(obj.serviceDescription)
       ..writeByte(4)
-      ..write(obj.categoyId)
+      ..write(obj.categoryId)
       ..writeByte(5)
       ..write(obj.price);
   }

@@ -134,12 +134,30 @@ class HiveService {
   Future<List<ServiceHiveModel>> getServicesByCategoryId(
     String categoryId,
   ) async {
-    return _serviceBox.values
-        .where((service) => service.categoyId == categoryId)
+    final result = _serviceBox.values
+        .where((service) => service.categoryId == categoryId)
         .toList();
+    return result;
   }
 
+  // Future<void> cacheAllServices(List<ServiceHiveModel> services) async {
+  //   await _serviceBox.putAll({
+  //     for (var service in services) service.serviceId: service,
+  //   });
+  // }
+
   Future<void> cacheAllServices(List<ServiceHiveModel> services) async {
+    if (services.isEmpty) return;
+
+    final categoryId = services.first.categoryId;
+
+    final keysToDelete = _serviceBox.values
+        .where((service) => service.categoryId == categoryId)
+        .map((service) => service.serviceId)
+        .toList();
+
+    await _serviceBox.deleteAll(keysToDelete);
+
     await _serviceBox.putAll({
       for (var service in services) service.serviceId: service,
     });

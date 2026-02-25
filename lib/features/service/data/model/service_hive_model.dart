@@ -21,7 +21,7 @@ class ServiceHiveModel extends HiveObject {
   final String serviceDescription;
 
   @HiveField(4)
-  final String categoyId;
+  final String categoryId;
 
   @HiveField(5)
   final String price;
@@ -31,7 +31,7 @@ class ServiceHiveModel extends HiveObject {
     required this.serviceName,
     required this.serviceImage,
     required this.serviceDescription,
-    required this.categoyId,
+    required this.categoryId,
     required this.price,
   }) : serviceId = serviceId ?? const Uuid().v4();
 
@@ -40,7 +40,7 @@ class ServiceHiveModel extends HiveObject {
       serviceName: serviceName,
       serviceImage: serviceImage,
       serviceDescription: serviceDescription,
-      categoryId: categoyId,
+      categoryId: categoryId,
       price: price,
     );
   }
@@ -51,7 +51,7 @@ class ServiceHiveModel extends HiveObject {
       serviceName: entity.serviceName,
       serviceImage: entity.serviceImage,
       serviceDescription: entity.serviceDescription,
-      categoyId: entity.categoryId,
+      categoryId: entity.categoryId,
       price: entity.price,
     );
   }
@@ -66,7 +66,7 @@ class ServiceHiveModel extends HiveObject {
       serviceName: apiModel.serviceName,
       serviceImage: apiModel.serviceImage,
       serviceDescription: apiModel.serviceDescription,
-      categoyId: apiModel.categoryId,
+      categoryId: apiModel.categoryId,
       price: apiModel.price,
     );
   }
