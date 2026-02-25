@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.ghar_care">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name = "android.permission.CAMERA"/>
     <uses-permission android:name = "android.permission.INTERNET"/>
@@ -9,9 +9,9 @@
     <uses-permission android:name = "android.permission.RECORD_AUDIO"/>
 
     <application
-        android:label="ghar_care"
+        android:label="Gharcare"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icons">
         <activity
             android:name=".MainActivity"
             android:exported="true"
