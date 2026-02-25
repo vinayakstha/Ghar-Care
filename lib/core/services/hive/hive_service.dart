@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/constants/hive_table_constant.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/service/data/model/service_hive_model.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -27,12 +28,16 @@ class HiveService {
     if (!Hive.isAdapterRegistered(HiveTableConstant.categoryTypeId)) {
       Hive.registerAdapter(CategoryHiveModelAdapter());
     }
+    if (!Hive.isAdapterRegistered(HiveTableConstant.serviceTypeId)) {
+      Hive.registerAdapter(ServiceHiveModelAdapter());
+    }
   }
 
   //open boxes
   Future<void> openBoxes() async {
     await Hive.openBox<AuthHiveModel>(HiveTableConstant.authTable);
     await Hive.openBox<CategoryHiveModel>(HiveTableConstant.categoryTable);
+    await Hive.openBox<ServiceHiveModel>(HiveTableConstant.serviceTable);
   }
 
   //close boxes
@@ -99,6 +104,44 @@ class HiveService {
     await _categoryBox.clear();
     await _categoryBox.putAll({
       for (var category in categories) category.categoryId: category,
+    });
+  }
+
+  //================ SERVICE QUERIES =================
+  Box<ServiceHiveModel> get _serviceBox =>
+      Hive.box<ServiceHiveModel>(HiveTableConstant.serviceTable);
+
+  Future<void> addService(ServiceHiveModel model) async {
+    await _serviceBox.put(model.serviceId, model);
+  }
+
+  Future<void> updateService(ServiceHiveModel model) async {
+    await _serviceBox.put(model.serviceId, model);
+  }
+
+  Future<void> deleteService(String id) async {
+    await _serviceBox.delete(id);
+  }
+
+  Future<ServiceHiveModel?> getServiceById(String id) async {
+    return _serviceBox.get(id);
+  }
+
+  Future<List<ServiceHiveModel>> getAllServices() async {
+    return _serviceBox.values.toList();
+  }
+
+  Future<List<ServiceHiveModel>> getServicesByCategoryId(
+    String categoryId,
+  ) async {
+    return _serviceBox.values
+        .where((service) => service.categoyId == categoryId)
+        .toList();
+  }
+
+  Future<void> cacheAllServices(List<ServiceHiveModel> services) async {
+    await _serviceBox.putAll({
+      for (var service in services) service.serviceId: service,
     });
   }
 }

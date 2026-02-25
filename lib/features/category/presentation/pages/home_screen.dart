@@ -44,7 +44,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         const Text(
                           "Our Services",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -71,7 +71,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(8),
                       itemCount: categoryState.categories.length,
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
