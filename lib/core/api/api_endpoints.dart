@@ -12,7 +12,7 @@ class ApiEndpoints {
   // For iOS Simulator use: 'http://localhost:5000/api/v1'
   // For Physical Device use your computer's IP: 'http://192.168.x.x:5000/api/v1'
 
-  static const bool isPhysicalDevice = true;
+  static const bool isPhysicalDevice = false;
 
   static const String compIpAddress = "192.168.18.3";
 
@@ -59,12 +59,19 @@ class ApiEndpoints {
   //=========== Booking Endpoints ==============
   static String createBooking = '/booking/';
   static const String getBookingsByUser = '/booking/';
+  static String deleteBooking(String bookingId) {
+    return '/booking/$bookingId';
+  }
 
   //========== Favourite Endpoints ==============
   static String createFavourite = '/favourite/';
   static String deleteFavourite(String favouriteId) {
     return '/favourite/$favouriteId';
   }
+
+  // =========== Payment Endpoints ==============
+  static const String initiatePayment = '/khalti/initiate';
+  static const String verifyPayment = '/khalti/verify';
 
   static const getFavouritesByUser = '/favourite/';
 

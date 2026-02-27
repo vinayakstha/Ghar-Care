@@ -70,4 +70,25 @@ class BookingRepository implements IBookingRepository {
       return Left(ApiFailure(message: "No internet connection"));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteBooking(String bookingId) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final bool result = await _bookingRemoteDataSource.deleteBooking(
+          bookingId,
+        );
+
+        if (!result) {
+          return Left(ApiFailure(message: "Failed to delete booking"));
+        }
+
+        return Right(result);
+      } catch (e) {
+        return Left(ApiFailure(message: e.toString()));
+      }
+    } else {
+      return Left(ApiFailure(message: "No internet connection"));
+    }
+  }
 }

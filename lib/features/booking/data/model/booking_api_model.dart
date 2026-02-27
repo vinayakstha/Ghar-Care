@@ -7,8 +7,13 @@ part 'booking_api_model.g.dart';
 class BookingApiModel {
   @JsonKey(name: "_id")
   final String? bookingId;
+
+  @JsonKey(fromJson: _idFromJson)
   final String userId;
+
+  @JsonKey(fromJson: _idFromJson)
   final String serviceId;
+
   final String bookingDate;
   final String bookingTime;
   final String price;
@@ -26,14 +31,18 @@ class BookingApiModel {
     this.status,
   });
 
-  /// Convert JSON to BookingApiModel
+  // Handles both plain string and nested object
+  static String _idFromJson(dynamic value) {
+    if (value is String) return value;
+    if (value is Map<String, dynamic>) return value['_id'] as String? ?? '';
+    return '';
+  }
+
   factory BookingApiModel.fromJson(Map<String, dynamic> json) =>
       _$BookingApiModelFromJson(json);
 
-  /// Convert BookingApiModel to JSON
   Map<String, dynamic> toJson() => _$BookingApiModelToJson(this);
 
-  /// Convert BookingApiModel to Entity
   BookingEntity toEntity() {
     return BookingEntity(
       bookingId: bookingId,
@@ -47,7 +56,6 @@ class BookingApiModel {
     );
   }
 
-  /// Create API model from Entity
   factory BookingApiModel.fromEntity(BookingEntity entity) {
     return BookingApiModel(
       bookingId: entity.bookingId,
@@ -61,7 +69,6 @@ class BookingApiModel {
     );
   }
 
-  /// Convert a list of API models to a list of Entities
   static List<BookingEntity?> toEntityList(List<BookingApiModel> models) {
     return models.map((model) => model.toEntity()).toList();
   }

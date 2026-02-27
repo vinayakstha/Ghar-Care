@@ -46,4 +46,16 @@ class BookingRemoteDatasource implements IBookingRemoteDataSource {
         .map((json) => BookingApiModel.fromJson(json as Map<String, dynamic>))
         .toList();
   }
+
+  @override
+  Future<bool> deleteBooking(String bookingId) async {
+    final response = await _apiClient.delete(
+      ApiEndpoints.deleteBooking(bookingId),
+    );
+
+    if (response.data == null) return false;
+
+    final Map<String, dynamic> resMap = response.data as Map<String, dynamic>;
+    return resMap['success'] == true;
+  }
 }
