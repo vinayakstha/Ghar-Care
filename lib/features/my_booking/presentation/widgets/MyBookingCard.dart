@@ -13,6 +13,8 @@ class MyBookingCard extends StatelessWidget {
     switch (status?.toLowerCase()) {
       case 'pending':
         return const Color(0xFF006BAA);
+      case 'paid':
+        return Colors.purple;
       case 'completed':
         return Colors.green;
       case 'cancelled':
@@ -31,6 +33,8 @@ class MyBookingCard extends StatelessWidget {
         return Icons.check_circle;
       case 'cancelled':
         return Icons.cancel;
+      case 'paid':
+        return Icons.payment;
       default:
         return Icons.info;
     }

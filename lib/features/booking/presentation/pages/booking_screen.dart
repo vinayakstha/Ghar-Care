@@ -279,6 +279,92 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   String? selectedTime;
   bool showFullDescription = false;
 
+  Future<void> _handleCashPayment(dynamic service) async {
+    if (selectedDate == null || selectedTime == null) {
+      SnackbarUtils.showWarning(context, "Please select date and time");
+      return;
+    }
+
+    if (_locationString == null || _locationString!.isEmpty) {
+      SnackbarUtils.showWarning(context, "Please select location");
+      return;
+    }
+
+    await ref
+        .read(bookingViewModelProvider.notifier)
+        .createBooking(
+          serviceId: service.serviceId ?? "",
+          bookingDate: selectedDate!,
+          bookingTime: selectedTime!,
+          price: service.price,
+          location: _locationString!,
+        );
+
+    if (!mounted) return;
+
+    final bookingState = ref.read(bookingViewModelProvider);
+
+    if (bookingState.status == BookingStatus.loaded) {
+      SnackbarUtils.showSuccess(context, "Booking placed successfully!");
+      Navigator.of(context).pop();
+    } else if (bookingState.status == BookingStatus.error) {
+      SnackbarUtils.showError(
+        context,
+        bookingState.errorMessage ?? "Booking failed",
+      );
+    }
+  }
+
+  Future<void> _showPaymentMethodDialog(dynamic service) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+          "Select Payment Method",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Cash Option
+            ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: Color(0xFFE8F5E9),
+                child: Icon(Icons.money, color: Colors.green),
+              ),
+              title: const Text(
+                "Pay with Cash",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: const Text("Pay when service is delivered"),
+              onTap: () {
+                Navigator.of(context).pop();
+                _handleCashPayment(service);
+              },
+            ),
+            const Divider(),
+            // Khalti Option
+            ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: Color(0xFFF3E5F5),
+                child: Icon(Icons.payment, color: Color(0xFF6A1B9A)),
+              ),
+              title: const Text(
+                "Pay with Khalti",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: const Text("Pay online securely"),
+              onTap: () {
+                Navigator.of(context).pop();
+                _handleBookingAndPayment(service);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   final List<String> timeSlots = [
     "9:00AM - 10:00AM",
     "10:00AM - 11:00AM",
@@ -520,8 +606,8 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : MyButton(
-                    text: "Confirm & Pay",
-                    onPressed: () => _handleBookingAndPayment(service),
+                    text: "Book Now",
+                    onPressed: () => _showPaymentMethodDialog(service),
                   ),
           ],
         ),
