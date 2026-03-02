@@ -13,4 +13,7 @@ class HiveTableConstant {
 
   static const int serviceTypeId = 2;
   static const String serviceTable = "service_table";
+
+  static const int myBookingTypeId = 3;
+  static const String myBookingTable = "my_booking_table";
 }

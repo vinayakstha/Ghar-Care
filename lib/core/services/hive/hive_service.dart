@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/constants/hive_table_constant.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/my_booking/data/model/my_booking_hive_model.dart';
 import 'package:ghar_care/features/service/data/model/service_hive_model.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,6 +32,9 @@ class HiveService {
     if (!Hive.isAdapterRegistered(HiveTableConstant.serviceTypeId)) {
       Hive.registerAdapter(ServiceHiveModelAdapter());
     }
+    if (!Hive.isAdapterRegistered(HiveTableConstant.myBookingTypeId)) {
+      Hive.registerAdapter(MyBookingHiveModelAdapter());
+    }
   }
 
   //open boxes
@@ -38,6 +42,7 @@ class HiveService {
     await Hive.openBox<AuthHiveModel>(HiveTableConstant.authTable);
     await Hive.openBox<CategoryHiveModel>(HiveTableConstant.categoryTable);
     await Hive.openBox<ServiceHiveModel>(HiveTableConstant.serviceTable);
+    await Hive.openBox<MyBookingHiveModel>(HiveTableConstant.myBookingTable);
   }
 
   //close boxes
@@ -161,5 +166,41 @@ class HiveService {
     await _serviceBox.putAll({
       for (var service in services) service.serviceId: service,
     });
+  }
+
+  //===================My Booking queries =============================
+  Box<MyBookingHiveModel> get _myBookingBox =>
+      Hive.box<MyBookingHiveModel>(HiveTableConstant.myBookingTable);
+
+  Future<void> cacheAllBookings(
+    List<MyBookingHiveModel> bookings,
+    String userId,
+  ) async {
+    if (bookings.isEmpty) return;
+
+    final keysToDelete = _myBookingBox.values
+        .where((booking) => booking.userId == userId)
+        .map((booking) => booking.bookingId)
+        .toList();
+
+    await _myBookingBox.deleteAll(keysToDelete);
+
+    await _myBookingBox.putAll({
+      for (var booking in bookings) booking.bookingId: booking,
+    });
+  }
+
+  Future<MyBookingHiveModel?> getBookingById(String bookingId) async {
+    return _myBookingBox.get(bookingId);
+  }
+
+  Future<List<MyBookingHiveModel>> getAllBookings() async {
+    return _myBookingBox.values.toList();
+  }
+
+  Future<List<MyBookingHiveModel>> getBookingsByUserId(String userId) async {
+    return _myBookingBox.values
+        .where((booking) => booking.userId == userId)
+        .toList();
   }
 }
