@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ghar_care/core/constants/hive_table_constant.dart';
 import 'package:ghar_care/features/auth/data/models/auth_hive_model.dart';
 import 'package:ghar_care/features/category/data/model/category_hive_model.dart';
+import 'package:ghar_care/features/favourite/data/model/favourite_hive_model.dart';
 import 'package:ghar_care/features/my_booking/data/model/my_booking_hive_model.dart';
 import 'package:ghar_care/features/service/data/model/service_hive_model.dart';
 import 'package:hive/hive.dart';
@@ -35,6 +36,9 @@ class HiveService {
     if (!Hive.isAdapterRegistered(HiveTableConstant.myBookingTypeId)) {
       Hive.registerAdapter(MyBookingHiveModelAdapter());
     }
+    if (!Hive.isAdapterRegistered(HiveTableConstant.favouriteTypeId)) {
+      Hive.registerAdapter(FavouriteHiveModelAdapter());
+    }
   }
 
   //open boxes
@@ -43,6 +47,7 @@ class HiveService {
     await Hive.openBox<CategoryHiveModel>(HiveTableConstant.categoryTable);
     await Hive.openBox<ServiceHiveModel>(HiveTableConstant.serviceTable);
     await Hive.openBox<MyBookingHiveModel>(HiveTableConstant.myBookingTable);
+    await Hive.openBox<FavouriteHiveModel>(HiveTableConstant.favouriteTable);
   }
 
   //close boxes
@@ -202,5 +207,39 @@ class HiveService {
     return _myBookingBox.values
         .where((booking) => booking.userId == userId)
         .toList();
+  }
+
+  //================ FAVOURITE QUERIES =================
+  Box<FavouriteHiveModel> get _favouriteBox =>
+      Hive.box<FavouriteHiveModel>(HiveTableConstant.favouriteTable);
+
+  Future<void> cacheAllFavourites(
+    List<FavouriteHiveModel> favourites,
+    String userId,
+  ) async {
+    if (favourites.isEmpty) return;
+
+    final keysToDelete = _favouriteBox.values
+        .where((favourite) => favourite.userId == userId)
+        .map((favourite) => favourite.favouriteId)
+        .toList();
+
+    await _favouriteBox.deleteAll(keysToDelete);
+
+    await _favouriteBox.putAll({
+      for (var favourite in favourites) favourite.favouriteId: favourite,
+    });
+  }
+
+  Future<List<FavouriteHiveModel>> getAllFavouritesByUserId(
+    String userId,
+  ) async {
+    return _favouriteBox.values
+        .where((favourite) => favourite.userId == userId)
+        .toList();
+  }
+
+  Future<List<FavouriteHiveModel>> getAllFavourites() async {
+    return _favouriteBox.values.toList();
   }
 }
