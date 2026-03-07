@@ -19,18 +19,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       title: "Book Services Easily",
       description:
           "Find trusted professionals for cleaning, plumbing, electrical work and more with just a few taps.",
-      imagePath: "assets/images/onboarding1.png",
+      imagePath: "assets/images/onboarding11.png",
     ),
     MyOnboarding(
       title: "Fast & Reliable",
       description:
           "Get verified and experienced service providers at yout doorstep. Quick, sage and hassle free.",
-      imagePath: "assets/images/onboarding2.png",
+      imagePath: "assets/images/onboarding22.png",
     ),
     MyOnboarding(
-      title: "Secure & Easy Payments",
-      description: "Enjoy transparent pricing and make secure online payments.",
-      imagePath: "assets/images/onboarding3.png",
+      title: "7 Days a Week Service",
+      description:
+          "Reliable home services whenever you need them, no off days.",
+      imagePath: "assets/images/onboarding33.png",
     ),
   ];
 
@@ -63,7 +64,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           PageView.builder(

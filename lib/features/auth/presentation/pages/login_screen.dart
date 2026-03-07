@@ -4,7 +4,7 @@ import 'package:ghar_care/app/routes/app_routes.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
 import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
-import 'package:ghar_care/features/dashboard/presentation/pages/navigation_screen.dart';
+import 'package:ghar_care/features/nav/presentation/pages/navigation_screen.dart';
 import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
 import 'package:ghar_care/core/widgets/my_button.dart';
 import 'package:ghar_care/core/widgets/my_textformfield.dart';
@@ -61,7 +61,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -134,61 +133,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 const SizedBox(height: 10),
 
-                // Forgot Password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-
+                // // Forgot Password
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: TextButton(
+                //     onPressed: () {},
+                //     child: const Text(
+                //       "Forgot Password?",
+                //       style: TextStyle(fontWeight: FontWeight.w600),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 20),
 
                 // Login Button
                 MyButton(text: "Login", onPressed: _handleLogin),
-
-                const SizedBox(height: 30),
-
-                // OR Divider
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: Colors.grey.shade400)),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text("Or Login With Google"),
-                    ),
-                    Expanded(child: Divider(color: Colors.grey.shade400)),
-                  ],
-                ),
-
-                const SizedBox(height: 20),
-
-                Center(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Image.asset(
-                        "assets/icons/google.png",
-                        height: 28,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(
-                              Icons.g_mobiledata,
-                              size: 28,
-                              color: Colors.blue,
-                            ),
-                      ),
-                    ),
-                  ),
-                ),
 
                 const SizedBox(height: 30),
 

@@ -7,4 +7,16 @@ class HiveTableConstant {
   //table name(box in hive)
   static const int authTypeId = 0;
   static const String authTable = "auth_table";
+
+  static const int categoryTypeId = 1;
+  static const String categoryTable = "category_table";
+
+  static const int serviceTypeId = 2;
+  static const String serviceTable = "service_table";
+
+  static const int myBookingTypeId = 3;
+  static const String myBookingTable = "my_booking_table";
+
+  static const int favouriteTypeId = 4;
+  static const String favouriteTable = "favourite_table";
 }

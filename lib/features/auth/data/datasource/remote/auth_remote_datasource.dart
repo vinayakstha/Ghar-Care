@@ -70,6 +70,7 @@ class AuthRemoteDatasource implements IAuthRemoteDataSource {
         firstName: user.firstName,
         lastName: user.lastName,
         phoneNumber: user.phoneNumber,
+        profilePicture: user.profilePicture,
       );
       //save token
       final token = response.data['token'] as String?;

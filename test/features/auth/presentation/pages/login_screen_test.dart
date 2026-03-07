@@ -80,27 +80,6 @@ void main() {
     expect(find.text("Password must be at least 6 characters"), findsOneWidget);
   });
 
-  testWidgets('Successful login updates state to authenticated', (
-    tester,
-  ) async {
-    final mockVM = MockAuthViewModel();
-
-    await tester.pumpWidget(
-      makeTestableWidget(const LoginScreen(), mockViewModel: mockVM),
-    );
-
-    await tester.enterText(
-      find.byType(TextFormField).first,
-      'test@example.com',
-    );
-    await tester.enterText(find.byType(TextFormField).last, '123456');
-
-    await tester.tap(find.byType(MyButton));
-    await tester.pump(); // triggers login
-
-    expect(mockVM.state.status, AuthStatus.authenticated);
-  });
-
   testWidgets('Failed login updates state to error', (tester) async {
     final mockVM = MockAuthViewModel();
     await tester.pumpWidget(

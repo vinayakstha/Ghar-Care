@@ -12,13 +12,15 @@ class ApiEndpoints {
   // For iOS Simulator use: 'http://localhost:5000/api/v1'
   // For Physical Device use your computer's IP: 'http://192.168.x.x:5000/api/v1'
 
-  static const bool isPhysicalDevice = false;
+  static const bool isPhysicalDevice = true;
 
-  static const String compIpAddress = "1111.333";
+  static const String compIpAddress = "192.168.18.3";
+
+  static const String imageBaseUrl = "http://$compIpAddress:5050";
 
   static String get baseUrl {
     if (isPhysicalDevice) {
-      return "http://$compIpAddress:3000/api";
+      return "http://$compIpAddress:5050/api";
     }
     if (kIsWeb) {
       return "http://localhost:3000/api";
@@ -41,8 +43,37 @@ class ApiEndpoints {
   static const String getUserById = '/user/';
   static const String getCurrentUser = '/user/me';
 
+  // ============ Category Endpoints ==========
   static const String getAllCategories = '/category/';
   static const String getCategoryById = '/category/';
+
+  // =========== Service Endpoints ==============
+  static String getServicesByCategory(String categoryId) {
+    return '/service/category/$categoryId';
+  }
+
+  static String getServiceById(String serviceId) {
+    return '/service/$serviceId';
+  }
+
+  //=========== Booking Endpoints ==============
+  static String createBooking = '/booking/';
+  static const String getBookingsByUser = '/booking/';
+  static String deleteBooking(String bookingId) {
+    return '/booking/$bookingId';
+  }
+
+  //========== Favourite Endpoints ==============
+  static String createFavourite = '/favourite/';
+  static String deleteFavourite(String favouriteId) {
+    return '/favourite/$favouriteId';
+  }
+
+  // =========== Payment Endpoints ==============
+  static const String initiatePayment = '/khalti/initiate';
+  static const String verifyPayment = '/khalti/verify';
+
+  static const getFavouritesByUser = '/favourite/';
 
   static String getImageUrl(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
