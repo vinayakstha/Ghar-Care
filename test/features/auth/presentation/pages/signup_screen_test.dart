@@ -6,7 +6,6 @@ import 'package:ghar_care/features/auth/presentation/pages/signup_screen.dart';
 import 'package:ghar_care/features/auth/presentation/state/auth_state.dart';
 import 'package:ghar_care/features/auth/presentation/view_model/auth_view_model.dart';
 
-// Mock AuthViewModel for testing
 class MockAuthViewModel extends AuthViewModel {
   AuthState mockState;
 
@@ -17,7 +16,6 @@ class MockAuthViewModel extends AuthViewModel {
   @override
   AuthState build() => mockState;
 
-  // Simulate successful registration
   Future<void> registerSuccess({
     required String firstName,
     required String lastName,
@@ -31,7 +29,6 @@ class MockAuthViewModel extends AuthViewModel {
     state = mockState;
   }
 
-  // Simulate registration error
   Future<void> registerError({
     required String firstName,
     required String lastName,
@@ -49,7 +46,6 @@ class MockAuthViewModel extends AuthViewModel {
   }
 }
 
-// Helper to wrap the widget with ProviderScope
 Widget makeTestableWidget(Widget child, {MockAuthViewModel? mockViewModel}) {
   return ProviderScope(
     overrides: [
@@ -65,71 +61,50 @@ void main() {
   testWidgets('SignupScreen renders all fields and button', (tester) async {
     await tester.pumpWidget(makeTestableWidget(const SignupScreen()));
 
-    // Check titles
     expect(find.text("Create your account"), findsOneWidget);
-
-    // Check input fields: first name, last name, username, email, phone, password, confirm
     expect(find.byType(TextFormField), findsNWidgets(7));
 
-    // Check button
     expect(find.byType(MyButton), findsOneWidget);
 
-    // Check login link
     expect(find.text("Login"), findsOneWidget);
   });
 
   testWidgets('Shows error for empty first name', (tester) async {
     await tester.pumpWidget(makeTestableWidget(const SignupScreen()));
 
-    // Scroll button into view
     await tester.ensureVisible(find.byType(MyButton));
 
-    // Tap the create account button without entering anything
     await tester.tap(find.byType(MyButton));
-    await tester.pump(); // rebuild form to show errors
+    await tester.pump();
 
-    // Check first name error
     expect(find.text("Enter first name"), findsOneWidget);
   });
 
   testWidgets('Shows error when email is invalid', (tester) async {
     await tester.pumpWidget(makeTestableWidget(const SignupScreen()));
 
-    // Enter invalid email
     await tester.enterText(find.byType(TextFormField).at(3), 'invalidemail');
 
     // Scroll submit button into view
     await tester.ensureVisible(find.byType(MyButton));
 
-    // Tap the button to trigger validation
     await tester.tap(find.byType(MyButton));
-    await tester.pump(); // rebuild to show error
+    await tester.pump();
 
-    // Check that the email error appears
     expect(find.text("Enter valid email"), findsOneWidget);
   });
 
   testWidgets('Shows error when passwords do not match', (tester) async {
     await tester.pumpWidget(makeTestableWidget(const SignupScreen()));
 
-    // Enter password and mismatched confirm password
-    await tester.enterText(
-      find.byType(TextFormField).at(5),
-      '123456',
-    ); // password
-    await tester.enterText(
-      find.byType(TextFormField).at(6),
-      '654321',
-    ); // confirm
+    await tester.enterText(find.byType(TextFormField).at(5), '123456');
+    await tester.enterText(find.byType(TextFormField).at(6), '654321');
 
-    // Scroll submit button into view
     await tester.ensureVisible(find.byType(MyButton));
 
-    // Tap the button to trigger validation
     await tester.tap(find.byType(MyButton));
-    await tester.pump(); // rebuild to show error
+    await tester.pump();
 
-    // Check that the password mismatch error appears
     expect(find.text("Passwords do not match"), findsOneWidget);
   });
 
