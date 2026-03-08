@@ -8,7 +8,6 @@ GharCare is a home service booking mobile application built using Flutter. The a
 - Browse available home services
 - View service details
 - Book home services
-- Manage user bookings
 - Save favourite services
 - Local data caching
 
