@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:ghar_care/core/utils/snackbar_utils.dart';
 import 'package:ghar_care/features/booking/presentation/view_model/booking_view_model.dart';
+import 'package:ghar_care/features/category/presentation/pages/home_screen.dart';
 import 'package:ghar_care/features/payment/presentation/state/payment_state.dart';
 import 'package:ghar_care/features/payment/presentation/view_model/payment_view_model.dart';
 
@@ -36,7 +37,6 @@ class _PaymentWebviewScreenState extends ConsumerState<PaymentWebviewScreen> {
           onPageStarted: (url) {
             setState(() => _isLoading = true);
 
-            // Intercept BEFORE the page loads
             if (!_verificationHandled &&
                 url.contains('/user/booking/verify') &&
                 url.contains('pidx=')) {
@@ -54,7 +54,6 @@ class _PaymentWebviewScreenState extends ConsumerState<PaymentWebviewScreen> {
           onNavigationRequest: (request) {
             final url = request.url;
 
-            // Intercept return URL and prevent webview from loading it
             if (!_verificationHandled &&
                 url.contains('/user/booking/verify') &&
                 url.contains('pidx=')) {
@@ -74,6 +73,11 @@ class _PaymentWebviewScreenState extends ConsumerState<PaymentWebviewScreen> {
       ..loadRequest(Uri.parse(widget.paymentUrl));
   }
 
+  void _popToHome() {
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ >= 2);
+  }
+
   Future<void> _handleVerification(String pidx) async {
     final success = await ref
         .read(paymentViewModelProvider.notifier)
@@ -83,7 +87,6 @@ class _PaymentWebviewScreenState extends ConsumerState<PaymentWebviewScreen> {
 
     if (success) {
       SnackbarUtils.showSuccess(context, "Payment successful!");
-      Navigator.of(context).popUntil((route) => route.isFirst);
     } else {
       await ref
           .read(bookingViewModelProvider.notifier)
@@ -91,8 +94,10 @@ class _PaymentWebviewScreenState extends ConsumerState<PaymentWebviewScreen> {
 
       if (!mounted) return;
       SnackbarUtils.showError(context, "Payment failed or cancelled.");
-      Navigator.of(context).popUntil((route) => route.isFirst);
     }
+
+    if (!mounted) return;
+    _popToHome();
   }
 
   Future<void> _handleClose() async {
@@ -127,7 +132,7 @@ class _PaymentWebviewScreenState extends ConsumerState<PaymentWebviewScreen> {
 
     if (!mounted) return;
     SnackbarUtils.showError(context, "Booking cancelled.");
-    Navigator.of(context).pop();
+    _popToHome();
   }
 
   @override
